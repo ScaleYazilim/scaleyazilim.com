@@ -1,18 +1,18 @@
 <!DOCTYPE html>
-<html lang="tr">
+<html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Scale Yazılım — Ankara merkezli yazılım geliştirme</title>
-<meta name="description" content="Scale Yazılım Ltd. Şti., Ankara merkezli bir yazılım geliştirme şirketidir. Web ve mobil uygulamalar, kurumsal yazılım, API entegrasyonları ve bulut çözümleri.">
+<title>Scale Yazılım — Software development studio in Ankara</title>
+<meta name="description" content="Scale Yazılım Ltd. Şti. is a software development company based in Ankara, Türkiye. Web and mobile applications, enterprise software, API integrations and cloud infrastructure.">
 <meta name="theme-color" content="#0A0B0C">
 <link rel="canonical" href="https://scaleyazilim.com/">
 
 <meta property="og:type" content="website">
-<meta property="og:locale" content="tr_TR">
+<meta property="og:locale" content="en_US">
 <meta property="og:site_name" content="Scale Yazılım">
-<meta property="og:title" content="Scale Yazılım — Ankara merkezli yazılım geliştirme">
-<meta property="og:description" content="Web ve mobil uygulamalar, kurumsal yazılım, API entegrasyonları ve bulut çözümleri. Ankara, Türkiye.">
+<meta property="og:title" content="Scale Yazılım — Software development studio in Ankara">
+<meta property="og:description" content="Web and mobile applications, enterprise software, API integrations and cloud infrastructure. Ankara, Türkiye.">
 <meta property="og:url" content="https://scaleyazilim.com/">
 <meta name="twitter:card" content="summary">
 
@@ -40,7 +40,7 @@
 
 <style>
 /* ─────────────────────────────────────────────
-   Scale Yazılım — tek dosya, bağımsız stil
+   Scale Yazılım — single file, self-contained
    ───────────────────────────────────────────── */
 :root{
   --ink:        #0A0B0C;
@@ -77,7 +77,7 @@ body{
   -webkit-font-smoothing:antialiased;
 }
 
-/* atmosfer: ince ızgara + sıcak halo + film grenli doku */
+/* atmosphere: hairline grid + warm halo + film grain */
 body::before{
   content:"";
   position:fixed; inset:0; z-index:0; pointer-events:none;
@@ -102,7 +102,7 @@ img,svg{ display:block; max-width:100%; }
 
 .wrap{ width:100%; max-width:var(--max); margin-inline:auto; padding-inline:var(--gut); }
 
-/* ── kılavuz etiketi ─────────────────────────── */
+/* ── label ───────────────────────────────────── */
 .tag{
   font-family:var(--mono);
   font-size:.6875rem;
@@ -112,7 +112,7 @@ img,svg{ display:block; max-width:100%; }
   color:var(--paper-faint);
 }
 
-/* ── başlık / navigasyon ─────────────────────── */
+/* ── header / nav ────────────────────────────── */
 header{
   position:sticky; top:0; z-index:50;
   backdrop-filter:saturate(140%) blur(14px);
@@ -150,7 +150,7 @@ nav a:hover::after{ transform:scaleX(1); transform-origin:left; }
 nav .mail{ color:var(--paper); }
 @media (max-width:640px){ nav .hide-sm{ display:none; } }
 
-/* ── giriş bölümü ────────────────────────────── */
+/* ── hero ────────────────────────────────────── */
 .hero{
   position:relative;
   padding-block:clamp(4.5rem,13vh,9rem) clamp(4rem,9vh,7rem);
@@ -224,7 +224,7 @@ h1 em::after{
 }
 .link-arrow:hover{ color:var(--paper); gap:.9rem; }
 
-/* ── bölüm iskeleti ──────────────────────────── */
+/* ── section scaffolding ─────────────────────── */
 section{ position:relative; }
 .band{ border-top:1px solid var(--line); padding-block:clamp(3.75rem,9vh,7rem); }
 
@@ -238,7 +238,7 @@ section{ position:relative; }
   line-height:1.05; letter-spacing:-.015em; margin:0;
 }
 
-/* ── hizmetler ───────────────────────────────── */
+/* ── services ────────────────────────────────── */
 .grid{
   display:grid;
   grid-template-columns:repeat(auto-fit, minmax(min(100%, 265px), 1fr));
@@ -273,7 +273,7 @@ section{ position:relative; }
 .cell p{ margin:0; font-size:.9375rem; line-height:1.62; color:var(--paper-dim); }
 @media (max-width:900px){ .cell{ border-right:none; } }
 
-/* ── hakkımızda ──────────────────────────────── */
+/* ── about ───────────────────────────────────── */
 .split{
   display:grid; gap:clamp(2rem,5vw,4.5rem);
   grid-template-columns:1fr;
@@ -298,12 +298,12 @@ section{ position:relative; }
 .facts .k{
   font-family:var(--mono); font-size:.6875rem; letter-spacing:.16em;
   text-transform:uppercase; color:var(--paper-faint); padding-top:.28em;
-  min-width:5.5rem;
+  min-width:6rem;
 }
 .facts .v{ font-size:.9688rem; color:var(--paper); }
 .facts .v small{ display:block; color:var(--paper-dim); font-size:.875rem; }
 
-/* ── iletişim ────────────────────────────────── */
+/* ── contact ─────────────────────────────────── */
 .contact{ padding-block:clamp(4rem,10vh,7.5rem); }
 .mail-xl{
   display:inline-block;
@@ -328,7 +328,7 @@ section{ position:relative; }
   padding-top:1.75rem; border-top:1px solid var(--line);
 }
 
-/* ── alt bilgi ───────────────────────────────── */
+/* ── footer ──────────────────────────────────── */
 footer{ border-top:1px solid var(--line); padding-block:2.25rem 2.75rem; }
 .foot{
   display:flex; flex-wrap:wrap; justify-content:space-between;
@@ -336,7 +336,7 @@ footer{ border-top:1px solid var(--line); padding-block:2.25rem 2.75rem; }
 }
 .foot .tag{ color:var(--paper-faint); text-transform:none; letter-spacing:.09em; }
 
-/* ── giriş animasyonları ─────────────────────── */
+/* ── entrance motion ─────────────────────────── */
 .rise{ opacity:0; transform:translateY(22px); }
 .hero .rise{ animation:rise .95s cubic-bezier(.2,.9,.2,1) forwards; }
 .hero .rise:nth-child(1){ animation-delay:.05s; }
@@ -362,7 +362,7 @@ footer{ border-top:1px solid var(--line); padding-block:2.25rem 2.75rem; }
 
 <header>
   <div class="wrap bar">
-    <a class="brand" href="#top" aria-label="Scale Yazılım — ana sayfa">
+    <a class="brand" href="#top" aria-label="Scale Yazılım — home">
       <svg viewBox="0 0 24 24" aria-hidden="true">
         <rect x="0"  y="15" width="4" height="7"  fill="currentColor" opacity=".55"/>
         <rect x="7"  y="9"  width="4" height="13" fill="currentColor" opacity=".8"/>
@@ -371,9 +371,9 @@ footer{ border-top:1px solid var(--line); padding-block:2.25rem 2.75rem; }
       <span class="brand-name">Scale<b>.</b>Yazılım</span>
     </a>
     <nav>
-      <a class="hide-sm" href="#hizmetler">Hizmetler</a>
-      <a class="hide-sm" href="#hakkimizda">Hakkımızda</a>
-      <a class="mail" href="#iletisim">İletişim</a>
+      <a class="hide-sm" href="#services">Services</a>
+      <a class="hide-sm" href="#about">About</a>
+      <a class="mail" href="#contact">Contact</a>
     </nav>
   </div>
 </header>
@@ -387,120 +387,120 @@ footer{ border-top:1px solid var(--line); padding-block:2.25rem 2.75rem; }
         <span class="rule" aria-hidden="true"></span>
       </div>
 
-      <h1 class="rise">Büyüyen işler için <em>ölçeklenen</em> yazılım.</h1>
+      <h1 class="rise">Software that <em>scales</em> with your business.</h1>
 
       <p class="lede rise">
-        <strong>Scale Yazılım Ltd. Şti.</strong>, Ankara merkezli bir yazılım geliştirme
-        şirketidir. Web ve mobil uygulamalar, kurumsal sistemler ve entegrasyonlar
-        geliştiriyor; kurduğumuz yapıların arkasında uzun vadede duruyoruz.
+        <strong>Scale Yazılım Ltd. Şti.</strong> is a software development company
+        based in Ankara, Türkiye. We build web and mobile applications, enterprise
+        systems and integrations &mdash; and we stand behind what we ship, long term.
       </p>
 
       <div class="actions rise">
         <a class="btn" href="mailto:info@scaleyazilim.com">
-          <span>Bize yazın</span>
+          <span>Get in touch</span>
           <span aria-hidden="true">&rarr;</span>
         </a>
-        <a class="link-arrow" href="#hizmetler">
-          Neler yapıyoruz <span aria-hidden="true">&darr;</span>
+        <a class="link-arrow" href="#services">
+          What we do <span aria-hidden="true">&darr;</span>
         </a>
       </div>
     </div>
   </section>
 
-  <section class="band" id="hizmetler">
+  <section class="band" id="services">
     <div class="wrap">
       <div class="sec-head reveal">
         <span class="tag">01</span>
-        <h2>Hizmetler</h2>
+        <h2>Services</h2>
       </div>
 
       <div class="grid reveal">
         <article class="cell">
           <span class="num">01</span>
-          <h3>Web &amp; Mobil Uygulama</h3>
-          <p>Güncel teknolojilerle geliştirilen, hızlı ve kullanıcı odaklı web ve mobil uygulamalar.</p>
+          <h3>Web &amp; Mobile Apps</h3>
+          <p>Fast, user-focused web and mobile products built with current, well-supported technologies.</p>
         </article>
         <article class="cell">
           <span class="num">02</span>
-          <h3>Kurumsal Yazılım</h3>
-          <p>İş süreçlerinize göre tasarlanan, büyümeye açık kurumsal sistemler ve SaaS platformları.</p>
+          <h3>Enterprise Software</h3>
+          <p>Internal tools and SaaS platforms designed around your processes, with room to grow.</p>
         </article>
         <article class="cell">
           <span class="num">03</span>
-          <h3>Entegrasyon &amp; API</h3>
-          <p>Mevcut sistemlerinizi birbirine bağlayan güvenilir servis, API ve veri entegrasyonları.</p>
+          <h3>Integration &amp; APIs</h3>
+          <p>Reliable service, API and data integrations that connect the systems you already run.</p>
         </article>
         <article class="cell">
           <span class="num">04</span>
-          <h3>Bulut &amp; Bakım</h3>
-          <p>Bulut altyapısı kurulumu, otomatik dağıtım süreçleri ve kesintisiz bakım desteği.</p>
+          <h3>Cloud &amp; Maintenance</h3>
+          <p>Cloud setup, automated deployment pipelines and continuous maintenance support.</p>
         </article>
       </div>
     </div>
   </section>
 
-  <section class="band" id="hakkimizda">
+  <section class="band" id="about">
     <div class="wrap">
       <div class="sec-head reveal">
         <span class="tag">02</span>
-        <h2>Hakkımızda</h2>
+        <h2>About</h2>
       </div>
 
       <div class="split">
         <div class="reveal">
           <p class="statement">
-            Küçük, odaklı bir ekibiz. İşi <em>doğru</em> yapmayı,
-            çok yapmaya tercih ediyoruz.
+            A small, focused team. We would rather do the work
+            <em>right</em> than do a lot of it.
           </p>
           <p class="body">
-            Her projeyi baştan sona sahipleniyoruz: ihtiyacı anlamak, sade bir çözüm
-            kurgulamak, çalışır hâle getirmek ve zaman içinde birlikte geliştirmek.
-            Gereksiz karmaşadan uzak, bakımı kolay yazılımlar üretiyoruz.
+            We take projects end to end: understand the need, design a simple solution,
+            get it running, and keep improving it over time. The result is software that
+            stays readable, maintainable and free of unnecessary complexity.
           </p>
           <p class="body">
-            Çalışma biçimimiz açık: ne yaptığımızı anlaşılır bir dille anlatır,
-            takvimi ve kapsamı baştan netleştiririz.
+            The way we work is straightforward &mdash; we explain what we are doing in plain
+            language, and we agree on scope and schedule up front.
           </p>
         </div>
 
         <ul class="facts reveal">
           <li>
-            <span class="k">Ünvan</span>
+            <span class="k">Entity</span>
             <span class="v">Scale Yazılım Ltd. Şti.</span>
           </li>
           <li>
-            <span class="k">Merkez</span>
+            <span class="k">Based in</span>
             <span class="v">Ankara, Türkiye</span>
           </li>
           <li>
-            <span class="k">Alan</span>
-            <span class="v">Yazılım geliştirme
-              <small>Web, mobil, kurumsal sistemler</small></span>
+            <span class="k">Focus</span>
+            <span class="v">Software development
+              <small>Web, mobile, enterprise systems</small></span>
           </li>
           <li>
-            <span class="k">Çalışma</span>
-            <span class="v">Proje &amp; sürekli destek
-              <small>Uzaktan veya yerinde</small></span>
+            <span class="k">Engage</span>
+            <span class="v">Projects &amp; ongoing support
+              <small>Remote or on-site</small></span>
           </li>
         </ul>
       </div>
     </div>
   </section>
 
-  <section class="band contact" id="iletisim">
+  <section class="band contact" id="contact">
     <div class="wrap">
       <div class="sec-head reveal">
         <span class="tag">03</span>
-        <h2>İletişim</h2>
+        <h2>Contact</h2>
       </div>
 
       <div class="reveal">
-        <p class="lede">Bir fikriniz ya da devam eden bir projeniz mi var? Kısaca yazın, konuşalım.</p>
+        <p class="lede">Have an idea, or a project already under way? Send us a short note.</p>
         <a class="mail-xl" href="mailto:info@scaleyazilim.com">info@scaleyazilim.com</a>
 
         <div class="contact-meta">
           <span class="tag">Ankara &middot; Türkiye</span>
-          <span class="tag">Yanıt süresi &mdash; 1 iş günü</span>
+          <span class="tag">Scale Yazılım Ltd. Şti.</span>
         </div>
       </div>
     </div>
@@ -510,7 +510,7 @@ footer{ border-top:1px solid var(--line); padding-block:2.25rem 2.75rem; }
 
 <footer>
   <div class="wrap foot">
-    <span class="tag">&copy; <span id="yil">2026</span> Scale Yazılım Ltd. Şti.</span>
+    <span class="tag">&copy; <span id="year">2026</span> Scale Yazılım Ltd. Şti.</span>
     <a class="tag" href="mailto:info@scaleyazilim.com">info@scaleyazilim.com</a>
   </div>
 </footer>
@@ -518,10 +518,10 @@ footer{ border-top:1px solid var(--line); padding-block:2.25rem 2.75rem; }
 </div>
 
 <script>
-  // yıl
-  document.getElementById('yil').textContent = new Date().getFullYear();
+  // current year
+  document.getElementById('year').textContent = new Date().getFullYear();
 
-  // görünür olunca yükselerek gir
+  // rise into view on scroll
   const items = document.querySelectorAll('.reveal');
   if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches && 'IntersectionObserver' in window) {
     const io = new IntersectionObserver((entries) => {

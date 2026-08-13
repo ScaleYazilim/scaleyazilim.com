@@ -1,50 +1,50 @@
 # scaleyazilim.com
 
-Scale Yazılım Ltd. Şti. kurumsal web sitesi. Tek sayfalık statik site — derleme adımı yok.
+Corporate website for Scale Yazılım Ltd. Şti. — a single-page static site with no build step.
 
-## Yapı
+## Structure
 
 ```
-index.html     tüm sayfa (HTML + CSS + JS tek dosyada)
-CNAME          özel alan adı: scaleyazilim.com
-robots.txt     arama motoru yönergeleri
-sitemap.xml    site haritası
-.nojekyll      GitHub Pages'in Jekyll işlemesini atlaması için
+index.html     the whole page (HTML + CSS + JS in one file)
+CNAME          custom domain: scaleyazilim.com
+robots.txt     crawler directives
+sitemap.xml    sitemap
+.nojekyll      tells GitHub Pages to skip Jekyll processing
 ```
 
-## Geliştirme
+## Development
 
-Dosyayı doğrudan tarayıcıda açmak yeterli:
+Opening the file directly is enough:
 
 ```bash
 open index.html
 ```
 
-Yerel sunucu tercih edilirse:
+Or serve it locally:
 
 ```bash
 python3 -m http.server 8000
 ```
 
-## Yayın
+## Deployment
 
-`main` dalına yapılan her push otomatik olarak yayına girer (GitHub Pages).
+Every push to `main` publishes automatically via GitHub Pages.
 
-### Pages ayarı (tek seferlik)
+### Pages setting (one-time)
 
 Repo → **Settings › Pages** → Source: **Deploy from a branch** → Branch: `main` / `/ (root)`.
 
-### DNS ayarı (tek seferlik)
+### DNS setting (one-time)
 
-Alan adı sağlayıcısında:
+At the domain registrar:
 
-| Tip   | Ad    | Değer                                                            |
+| Type  | Name  | Value                                                            |
 |-------|-------|------------------------------------------------------------------|
 | A     | `@`   | `185.199.108.153` `185.199.109.153` `185.199.110.153` `185.199.111.153` |
 | CNAME | `www` | `motivolog.github.io`                                            |
 
-DNS yayıldıktan sonra Settings › Pages bölümünden **Enforce HTTPS** işaretlenmelidir.
+Once DNS propagates, enable **Enforce HTTPS** under Settings › Pages.
 
-## İletişim
+## Contact
 
 info@scaleyazilim.com
