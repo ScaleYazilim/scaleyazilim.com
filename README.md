@@ -6,11 +6,17 @@ Corporate website for Scale Yazılım Ltd. Şti. — a single-page static site w
 
 ```
 index.html     the whole page (HTML + CSS + JS in one file)
+logo.svg       full lockup — mark + wordmark, used in the header
+favicon.svg    the mark on its own, used as the browser icon
 CNAME          custom domain: scaleyazilim.com
 robots.txt     crawler directives
 sitemap.xml    sitemap
 .nojekyll      tells GitHub Pages to skip Jekyll processing
 ```
+
+The palette is taken straight from the logo — deep navy `#0B1A3D` / `#004A7E`
+through to cyan `#0098B3` / `#2EB6DB` — and lives in the `:root` block of
+`index.html`. Changing those custom properties re-themes the whole page.
 
 ## Development
 
