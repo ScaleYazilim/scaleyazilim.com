@@ -255,19 +255,20 @@ section{ position:relative; }
 }
 
 /* ── services ────────────────────────────────── */
+/* 1px gap over a tinted container paints every divider, at any column count */
 .grid{
   display:grid;
   grid-template-columns:repeat(auto-fit, minmax(min(100%, 265px), 1fr));
+  gap:1px;
   border:1px solid var(--line);
-  background:var(--card);
+  background:var(--line);
 }
 .cell{
   padding:clamp(1.75rem,3vw,2.5rem) clamp(1.25rem,2.4vw,2rem);
-  border-right:1px solid var(--line);
+  background:var(--card);
   position:relative;
   transition:background .45s ease, box-shadow .45s ease;
 }
-.cell:last-child{ border-right:none; }
 .cell::before{
   content:""; position:absolute; left:0; top:0; height:3px; width:100%;
   background:var(--grad); transform:scaleX(0); transform-origin:left;
@@ -287,10 +288,6 @@ section{ position:relative; }
   margin:0 0 .65rem;
 }
 .cell p{ margin:0; font-size:.9375rem; line-height:1.62; color:var(--muted); }
-@media (max-width:900px){
-  .cell{ border-right:none; border-bottom:1px solid var(--line); }
-  .cell:last-child{ border-bottom:none; }
-}
 
 /* ── about ───────────────────────────────────── */
 .split{
