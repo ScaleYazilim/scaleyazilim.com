@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Scale Yazılım — Software development studio in Ankara</title>
-<meta name="description" content="Scale Yazılım Ltd. Şti. is a software development company based in Ankara, Türkiye. Web and mobile applications, enterprise software, API integrations, big data processing, search relevance and cloud infrastructure.">
+<meta name="description" content="Scale Yazılım Ltd. Şti. is a software development company based in Ankara, Türkiye. Web and mobile applications, enterprise software, API integrations, big data processing, search relevance, cloud infrastructure and Reforge, our agentic legacy modernization platform.">
 <meta name="theme-color" content="#F6F8FA">
 <link rel="canonical" href="https://scaleyazilim.com/">
 
@@ -289,6 +289,20 @@ section{ position:relative; }
 }
 .cell p{ margin:0; font-size:.9375rem; line-height:1.62; color:var(--muted); }
 
+/* featured platform cell — spans every column of the grid */
+.cell-wide{ grid-column:1 / -1; display:block; }
+.cell-wide .wide-body{ display:grid; gap:1.5rem 3rem; align-items:end; }
+@media (min-width:760px){ .cell-wide .wide-body{ grid-template-columns:1fr auto; } }
+.cell-wide h3{ font-family:var(--serif); font-size:clamp(1.45rem,1.1rem + 1.1vw,2rem); letter-spacing:-.01em; line-height:1.1; }
+.cell-wide p{ max-width:64ch; }
+.cell-wide .link-arrow{ color:var(--navy); white-space:nowrap; }
+.cell-wide:hover .link-arrow{ gap:.9rem; }
+.chips{ display:flex; flex-wrap:wrap; gap:.5rem; margin-top:1.1rem; }
+.chips span{
+  font-family:var(--mono); font-size:.6875rem; letter-spacing:.04em;
+  padding:.3rem .65rem; border:1px solid var(--line); border-radius:999px; color:var(--muted);
+}
+
 /* ── about ───────────────────────────────────── */
 .split{
   display:grid; gap:clamp(2rem,5vw,4.5rem);
@@ -395,6 +409,7 @@ footer a.tag:hover{ color:var(--cyan-br); }
     </a>
     <nav>
       <a class="hide-sm" href="#services">Services</a>
+      <a class="hide-sm" href="modernization/">Platform</a>
       <a class="hide-sm" href="#about">About</a>
       <a class="mail" href="#contact">Contact</a>
     </nav>
@@ -475,6 +490,19 @@ footer a.tag:hover{ color:var(--cyan-br); }
           <h3>Cloud &amp; Maintenance</h3>
           <p>Cloud setup, automated deployment pipelines and continuous maintenance support.</p>
         </article>
+        <a class="cell cell-wide" href="modernization/">
+          <span class="num">07 &middot; Platform</span>
+          <div class="wide-body">
+            <div>
+              <h3>Reforge &mdash; Legacy Modernization Platform</h3>
+              <p>An on-premises, GPU-served, multi-agent AI platform that scans legacy codebases, plans their modernization and works through it under your operators&rsquo; direction &mdash; logging cost, quality and progress on every task.</p>
+              <div class="chips">
+                <span>On-premises</span><span>Multi-agent</span><span>Operator in the loop</span><span>Language agnostic</span><span>Weekly &amp; monthly reports</span>
+              </div>
+            </div>
+            <span class="link-arrow">Explore the platform <span aria-hidden="true">&rarr;</span></span>
+          </div>
+        </a>
       </div>
     </div>
   </section>
