@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Scale Yazılım — Software development studio in Ankara</title>
-<meta name="description" content="Scale Yazılım Ltd. Şti. is a software development company based in Ankara, Türkiye. Web and mobile applications, enterprise software, API integrations, big data processing, search relevance, cloud infrastructure and Reforge, our agentic legacy modernization platform.">
+<meta name="description" content="Scale Yazılım Ltd. Şti. is a software development company based in Ankara, Türkiye. Web and mobile applications, enterprise software, API integrations, big data processing, search relevance, cloud infrastructure, Reforge — our agentic legacy modernization platform — and training and consulting for Elasticsearch, Qdrant, Redis, Kafka, Spark and Kubernetes.">
 <meta name="theme-color" content="#F6F8FA">
 <link rel="canonical" href="https://scaleyazilim.com/">
 
@@ -303,6 +303,12 @@ section{ position:relative; }
   padding:.3rem .65rem; border:1px solid var(--line); border-radius:999px; color:var(--muted);
 }
 
+/* ── training & consulting ───────────────────── */
+.sec-intro{ margin:calc(-1 * clamp(1rem,2.5vw,1.75rem)) 0 clamp(2rem,4.5vw,3rem); max-width:62ch; color:var(--muted); }
+a.cell .num{ display:flex; justify-content:space-between; gap:1rem; text-transform:uppercase; }
+a.cell .num::after{ content:"\2192"; letter-spacing:0; transition:transform .4s cubic-bezier(.2,.9,.2,1); }
+a.cell:hover .num::after{ transform:translateX(4px); }
+
 /* ── about ───────────────────────────────────── */
 .split{
   display:grid; gap:clamp(2rem,5vw,4.5rem);
@@ -410,6 +416,7 @@ footer a.tag:hover{ color:var(--cyan-br); }
     <nav>
       <a class="hide-sm" href="#services">Services</a>
       <a class="hide-sm" href="modernization/">Platform</a>
+      <a class="hide-sm" href="#training">Training</a>
       <a class="hide-sm" href="#about">About</a>
       <a class="mail" href="#contact">Contact</a>
     </nav>
@@ -507,10 +514,56 @@ footer a.tag:hover{ color:var(--cyan-br); }
     </div>
   </section>
 
-  <section class="band" id="about">
+  <section class="band" id="training">
     <div class="wrap">
       <div class="sec-head reveal">
         <span class="tag">02</span>
+        <h2>Training &amp; consulting</h2>
+      </div>
+      <p class="sec-intro reveal">
+        Hands-on consulting and team training on the systems we run every day. Each page doubles
+        as a three-page PDF brochure you can download and share.
+      </p>
+
+      <div class="grid reveal">
+        <a class="cell" href="services/elasticsearch/">
+          <span class="num">Search</span>
+          <h3>Elasticsearch &amp; OpenSearch</h3>
+          <p>Cluster health checks, relevance tuning and migrations &mdash; and programmes from fundamentals to relevance engineering.</p>
+        </a>
+        <a class="cell" href="services/qdrant/">
+          <span class="num">Vector search</span>
+          <h3>Qdrant</h3>
+          <p>Sizing, search quality, HNSW and quantization tuning, model migrations and a three-day production course.</p>
+        </a>
+        <a class="cell" href="services/redis/">
+          <span class="num">Caching</span>
+          <h3>Redis &amp; caching systems</h3>
+          <p>Cache design and invalidation, latency, stampede protection and high availability with Sentinel and Cluster.</p>
+        </a>
+        <a class="cell" href="services/big-data/">
+          <span class="num">Data platforms</span>
+          <h3>Kafka, Spark &amp; big data</h3>
+          <p>Streaming architecture, Kafka operations, Spark performance, lakehouse design and four training programmes.</p>
+        </a>
+        <a class="cell" href="services/kubernetes/">
+          <span class="num">Platform</span>
+          <h3>Kubernetes</h3>
+          <p>Cluster design, security hardening, GitOps delivery, observability and stateful workloads on Kubernetes.</p>
+        </a>
+        <a class="cell" href="#contact">
+          <span class="num">Something else</span>
+          <h3>A programme for your team</h3>
+          <p>Python and PySpark, search relevance, AI infrastructure &mdash; tell us what your team needs and we will shape it.</p>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <section class="band" id="about">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <span class="tag">03</span>
         <h2>About</h2>
       </div>
 
@@ -558,7 +611,7 @@ footer a.tag:hover{ color:var(--cyan-br); }
   <section class="band contact" id="contact">
     <div class="wrap">
       <div class="sec-head reveal">
-        <span class="tag">03</span>
+        <span class="tag">04</span>
         <h2>Contact</h2>
       </div>
 

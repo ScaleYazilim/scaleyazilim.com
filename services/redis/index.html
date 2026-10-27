@@ -1,0 +1,1175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Redis & caching training & consulting · Scale Yazılım</title>
+<meta name="description" content="Redis, Valkey and caching architecture consulting and training from Scale Yazılım: cache design and invalidation, latency, stampede protection, high availability with Sentinel and Cluster, and memory right-sizing.">
+<meta name="theme-color" content="#F6F8FA">
+<link rel="canonical" href="https://scaleyazilim.com/services/redis/">
+
+<meta property="og:type" content="website">
+<meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="Scale Yazılım">
+<meta property="og:title" content="Redis & caching systems — training and consulting">
+<meta property="og:description" content="Redis, Valkey and caching architecture consulting and training from Scale Yazılım: cache design and invalidation, latency, stampede protection, high availability with Sentinel and Cluster, and memory right-sizing.">
+<meta property="og:url" content="https://scaleyazilim.com/services/redis/">
+<meta property="og:image" content="https://scaleyazilim.com/logo.svg">
+<meta name="twitter:card" content="summary">
+
+<link rel="icon" href="../../favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="../../favicon.svg">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Service",
+  "name": "Redis and caching systems training and consulting",
+  "serviceType": "Training and consulting",
+  "description": "Redis, Valkey and caching architecture consulting and training from Scale Yazılım: cache design and invalidation, latency, stampede protection, high availability with Sentinel and Cluster, and memory right-sizing.",
+  "url": "https://scaleyazilim.com/services/redis/",
+  "areaServed": "Worldwide",
+  "provider": {
+    "@type": "Organization",
+    "name": "Scale Yazılım Ltd. Şti.",
+    "url": "https://scaleyazilim.com/",
+    "email": "info@scaleyazilim.com",
+    "address": { "@type": "PostalAddress", "addressLocality": "Ankara", "addressCountry": "TR" }
+  }
+}
+</script>
+
+<style>
+/* ─────────────────────────────────────────────
+   Scale Yazılım — training & consulting page
+   Same palette and type as the home page. Each
+   .sheet prints as exactly one A4 page, so the
+   page doubles as a shareable PDF brochure.
+   ───────────────────────────────────────────── */
+:root{
+  --ink:       #0B1A3D;
+  --ink-2:     #173F6E;
+  --navy:      #004A7E;
+  --steel:     #2383AD;
+  --cyan:      #0098B3;
+  --cyan-br:   #2EB6DB;
+
+  --paper:     #F5F8FA;
+  --card:      #FFFFFF;
+  --muted:     #55677E;
+  --faint:     #8595A8;
+  --line:      rgba(11,26,61,.13);
+  --line-soft: rgba(11,26,61,.07);
+  --grid:      rgba(11,26,61,.035);
+
+  --grad: linear-gradient(100deg, var(--navy), var(--cyan-br));
+
+  --serif: "Instrument Serif", "Times New Roman", serif;
+  --sans:  "IBM Plex Sans", -apple-system, "Segoe UI", sans-serif;
+  --mono:  "IBM Plex Mono", ui-monospace, "SF Mono", monospace;
+
+  --gut: clamp(1.25rem, 5vw, 5.5rem);
+  --max: 1240px;
+  --ease-out: cubic-bezier(.23,1,.32,1);
+
+  /* isometric figure: a night-blue plate, hairlines, one cyan light */
+  --fx-panel:   #06102A;
+  --fx-body:    #0C1C40;
+  --fx-deck:    #112656;
+  --fx-line:    #3A5D90;
+  --fx-detail:  #1D3964;
+  --fx-recess:  #081533;
+  --fx-ink:     #7F98BE;
+  --fx-ink-hi:  #D8E6F6;
+  --fx-accent:  #2EB6DB;
+  --fx-accent-d:#1A7FA0;
+  --fx-accent-hi:#AEEFFC;
+  --fx-accent-dim:rgba(46,182,219,.16);
+  --fx-grid:    rgba(127,152,190,.075);
+}
+
+*,*::before,*::after{ box-sizing:border-box; }
+html{ -webkit-text-size-adjust:100%; scroll-behavior:smooth; }
+
+body{
+  margin:0;
+  background:var(--paper);
+  color:var(--ink);
+  font-family:var(--sans);
+  font-weight:300;
+  font-size:clamp(1rem,.96rem + .2vw,1.0625rem);
+  line-height:1.65;
+  letter-spacing:.005em;
+  overflow-x:hidden;
+  -webkit-font-smoothing:antialiased;
+}
+body::before{
+  content:"";
+  position:fixed; inset:0; z-index:0; pointer-events:none;
+  background:
+    radial-gradient(110% 70% at 88% -8%, rgba(46,182,219,.20), transparent 60%),
+    radial-gradient(80% 55% at -5% 8%, rgba(0,74,126,.09), transparent 62%),
+    linear-gradient(to right, var(--grid) 1px, transparent 1px) 0 0/ 92px 92px,
+    linear-gradient(to bottom, var(--grid) 1px, transparent 1px) 0 0/ 92px 92px;
+  mask-image:linear-gradient(to bottom, #000 0%, #000 40%, transparent 80%);
+}
+.shell{ position:relative; z-index:1; }
+::selection{ background:var(--cyan); color:#fff; }
+a{ color:inherit; text-decoration:none; }
+img,svg{ display:block; max-width:100%; }
+.wrap{ width:100%; max-width:var(--max); margin-inline:auto; padding-inline:var(--gut); }
+.print-only{ display:none; }
+
+.tag{
+  font-family:var(--mono); font-size:.6875rem; font-weight:500;
+  letter-spacing:.22em; text-transform:uppercase; color:var(--faint);
+}
+
+/* ── header ──────────────────────────────────── */
+header.site{
+  position:sticky; top:0; z-index:50;
+  backdrop-filter:saturate(160%) blur(16px);
+  background:rgba(245,248,250,.93);
+  border-bottom:1px solid var(--line-soft);
+}
+.bar{ display:flex; align-items:center; justify-content:space-between; gap:1.5rem; min-height:84px; }
+.brand{ display:block; line-height:0; }
+.brand img{ width:clamp(126px, 14vw, 158px); height:auto; transition:opacity .3s; }
+.brand:hover img{ opacity:.75; }
+nav{ display:flex; align-items:center; gap:clamp(1rem,2.4vw,2.25rem); }
+nav a{
+  font-family:var(--mono); font-size:.75rem; letter-spacing:.1em;
+  text-transform:uppercase; color:var(--muted);
+  padding-block:.35rem; position:relative; transition:color .3s;
+}
+nav a:not(.pdf)::after{
+  content:""; position:absolute; left:0; bottom:0; height:2px; width:100%;
+  background:var(--grad); transform:scaleX(0); transform-origin:right;
+  transition:transform .4s cubic-bezier(.2,.9,.2,1);
+}
+nav a:hover{ color:var(--ink); }
+nav a:hover::after{ transform:scaleX(1); transform-origin:left; }
+nav a.pdf{
+  color:var(--ink); border:1px solid var(--line); padding:.45rem .8rem;
+  transition:border-color .3s, color .3s, transform .16s var(--ease-out);
+}
+nav a.pdf:hover{ border-color:var(--cyan); color:var(--navy); }
+nav a.pdf:active{ transform:scale(.97); }
+@media (max-width:760px){ nav .hide-sm{ display:none; } }
+
+/* ── cover ───────────────────────────────────── */
+.cover{ padding-block:clamp(3rem,9vh,6rem) clamp(3.5rem,8vh,5.5rem); }
+.cover-grid{ display:grid; gap:clamp(2.25rem,4vw,3.5rem); align-items:center; }
+@media (min-width:1000px){ .cover-grid{ grid-template-columns:minmax(0,.92fr) minmax(0,1.08fr); } }
+.cover-copy{ display:grid; gap:1.6rem; align-content:start; }
+
+.eyebrow{ display:flex; align-items:center; gap:1rem; }
+.eyebrow .tag{ color:var(--cyan); }
+.eyebrow .rule{
+  flex:1; height:9px; min-width:60px;
+  background-image:linear-gradient(to right, var(--line) 1px, transparent 1px);
+  background-size:11px 100%;
+  mask-image:linear-gradient(to right, #000, transparent 85%);
+}
+
+h1{
+  font-family:var(--serif); font-weight:400;
+  font-size:clamp(2.7rem, 5.4vw, 4.9rem);
+  line-height:.98; letter-spacing:-.022em;
+  margin:0; text-wrap:balance;
+}
+h1 em, .sec-head h2 em{
+  font-style:italic; padding-inline:.04em;
+  background:var(--grad);
+  -webkit-background-clip:text; background-clip:text;
+  -webkit-text-fill-color:transparent; color:var(--cyan);
+}
+.lede{
+  margin:0; max-width:54ch;
+  font-size:clamp(1.05rem,.98rem + .4vw,1.24rem);
+  line-height:1.62; color:var(--muted);
+}
+.lede strong{ color:var(--ink); font-weight:400; }
+
+.actions{ display:flex; flex-wrap:wrap; align-items:center; gap:1.25rem 2rem; margin-top:.4rem; }
+.btn{
+  display:inline-flex; align-items:center; gap:.7rem;
+  font-family:var(--mono); font-size:.8125rem; letter-spacing:.06em;
+  padding:1.05rem 1.6rem;
+  border:1px solid var(--ink); background:var(--ink); color:#fff;
+  position:relative; overflow:hidden;
+  transition:border-color .45s, box-shadow .45s, transform .16s var(--ease-out);
+}
+.btn span{ position:relative; z-index:1; }
+.btn::before{
+  content:""; position:absolute; inset:0; background:var(--grad);
+  transform:translateY(101%); transition:transform .45s cubic-bezier(.2,.9,.2,1);
+}
+.btn:hover{ border-color:var(--cyan); box-shadow:0 10px 26px -12px rgba(0,74,126,.55); }
+.btn:hover::before{ transform:translateY(0); }
+.btn:active{ transform:scale(.97); }
+.link-arrow{
+  font-family:var(--mono); font-size:.8125rem; letter-spacing:.06em;
+  color:var(--muted); display:inline-flex; align-items:center; gap:.55rem;
+  transition:color .3s, gap .3s;
+}
+.link-arrow:hover{ color:var(--navy); gap:.9rem; }
+
+/* ── isometric figure plate ──────────────────── */
+.iso{
+  margin:0; position:relative; color:var(--fx-ink);
+  background:
+    radial-gradient(60% 55% at 55% 52%, rgba(46,182,219,.13), transparent 72%),
+    linear-gradient(to right, var(--fx-grid) 1px, transparent 1px) 0 0/ 26px 26px,
+    linear-gradient(to bottom, var(--fx-grid) 1px, transparent 1px) 0 0/ 26px 26px,
+    var(--fx-panel);
+  border:1px solid #0E1D40;
+  box-shadow:0 30px 60px -38px rgba(6,16,42,.85);
+  display:flex; flex-direction:column;
+  -webkit-print-color-adjust:exact; print-color-adjust:exact;
+}
+.iso::before, .iso::after{
+  content:""; position:absolute; width:14px; height:14px; pointer-events:none;
+  border-color:rgba(46,182,219,.55); border-style:solid;
+}
+.iso::before{ top:8px; left:8px; border-width:1px 0 0 1px; }
+.iso::after{ bottom:8px; right:8px; border-width:0 1px 1px 0; }
+.iso-top, .iso-cap{
+  display:flex; justify-content:space-between; align-items:baseline; gap:1rem;
+  font-family:var(--mono); font-size:.6875rem; letter-spacing:.12em;
+  padding:.95rem 1.2rem 0;
+}
+.iso-top .fig{ text-transform:uppercase; color:var(--fx-ink); }
+.iso-top .fig b{ color:var(--fx-accent); font-weight:500; }
+.iso-top .state{ color:var(--fx-ink-hi); letter-spacing:.06em; }
+.iso-top .state::before{
+  content:""; display:inline-block; width:6px; height:6px; border-radius:50%;
+  background:var(--fx-accent); box-shadow:0 0 8px var(--fx-accent); margin-right:.55rem;
+  vertical-align:1px;
+}
+.iso svg{ width:100%; height:auto; flex:1; outline:none; touch-action:manipulation; }
+.iso svg:focus-visible{ outline:1px dashed var(--fx-line); outline-offset:-6px; }
+.iso-cap{ padding:0 1.2rem 1rem; letter-spacing:.04em; }
+.iso-cap .hint{ color:var(--fx-ink); }
+.iso-cap .readout{ color:var(--fx-accent-hi); text-align:right; }
+@media (max-width:640px){
+  .iso-cap{ flex-direction:column; align-items:flex-start; gap:.35rem; }
+  .iso-cap .readout{ text-align:left; }
+  .iso-top{ flex-wrap:wrap; }
+}
+.iso-cap .caption{ display:none; }
+.iso-credit{
+  display:block; margin-top:.6rem; text-align:right;
+  font-family:var(--mono); font-size:.625rem; letter-spacing:.08em; color:var(--faint);
+}
+.iso-credit:hover{ color:var(--navy); }
+
+/* shared figure vocabulary (after iso-glow) */
+.iso text{ font-family:var(--mono); }
+.iso .face{ fill:var(--fx-body); stroke:var(--fx-line); stroke-width:1; vector-effect:non-scaling-stroke; stroke-linejoin:round; }
+.iso .face.top{ fill:var(--fx-deck); }
+.iso .face.recess{ fill:var(--fx-recess); }
+.iso .plate .face{ fill:#081534; stroke:#26446F; }
+.iso .plate .face.top{ fill:#0A1A3E; }
+.iso .detail{ fill:none; stroke:var(--fx-detail); stroke-width:1; vector-effect:non-scaling-stroke; }
+.iso .label{ fill:var(--fx-ink); }
+.iso .label.hi{ fill:var(--fx-ink-hi); }
+.iso .glass{ fill:var(--fx-recess); stroke:var(--fx-detail); vector-effect:non-scaling-stroke; transition:fill .3s, stroke .3s; }
+.iso .glass.hot{ fill:#0D4560; stroke:var(--fx-accent); }
+.iso .scr{ fill:var(--fx-accent-hi); }
+.iso .halo{ fill:var(--fx-accent); opacity:0; transition:opacity .45s; }
+.iso .halo.hot{ opacity:.34; }
+.iso .led{ fill:var(--fx-detail); transition:fill .2s; }
+.iso .led.hot{ fill:var(--fx-accent-hi); }
+.iso .wire{ fill:none; stroke:var(--fx-line); stroke-width:1; vector-effect:non-scaling-stroke; stroke-linecap:round; stroke-linejoin:round; transition:stroke .4s; }
+.iso .wire.hot{ stroke:var(--fx-accent); }
+.iso .pulse{
+  fill:none; stroke:var(--fx-accent-hi); stroke-width:2.4; stroke-linecap:round; vector-effect:non-scaling-stroke;
+  stroke-dasharray:80 1200; stroke-dashoffset:80; opacity:0;
+}
+.iso .pulse.go{ animation:flow var(--dur,.7s) linear forwards; }
+@keyframes flow{ 0%{ stroke-dashoffset:80; opacity:1; } 88%{ opacity:1; } 100%{ stroke-dashoffset:-1000; opacity:0; } }
+.iso .lit .face{ fill:var(--fx-accent); stroke:var(--fx-accent-hi); }
+.iso .lit .face.side{ fill:var(--fx-accent-d); }
+.iso .lit .face.top{ fill:var(--fx-accent-hi); }
+.iso .press{ cursor:pointer; }
+.iso .press:hover > .face.top, .iso .press:hover > .face{ stroke:var(--fx-ink-hi); }
+.iso .fade-in{ animation:fadeIn .7s var(--ease-out) both; }
+@keyframes fadeIn{ from{ opacity:0; transform:translateY(-10px); } to{ opacity:1; transform:none; } }
+@media (prefers-reduced-motion:reduce){
+  .iso .pulse.go{ animation:none; }
+  .iso .fade-in{ animation:none; }
+}
+
+/* ── stats + pillars under the hero ──────────── */
+.stats{
+  list-style:none; margin:clamp(2.75rem,7vh,4.25rem) 0 0; padding:0;
+  display:grid; grid-template-columns:repeat(auto-fit, minmax(min(100%, 150px), 1fr));
+  border-top:1px solid var(--line);
+}
+.stats li{ padding:1.3rem 1.5rem 0 0; display:grid; gap:.35rem; align-content:start; }
+.stats b{
+  font-family:var(--serif); font-weight:400; font-size:clamp(2rem,1.5rem + 1.6vw,2.75rem);
+  line-height:1; letter-spacing:-.02em; color:var(--ink);
+}
+.stats span{ font-size:.9rem; color:var(--muted); line-height:1.5; max-width:30ch; }
+
+.pillars{
+  margin-top:clamp(2.25rem,5vh,3rem);
+  display:grid; grid-template-columns:repeat(auto-fit, minmax(min(100%, 280px), 1fr));
+  gap:1px; background:var(--line); border:1px solid var(--line);
+}
+.pillars > div{ background:var(--card); padding:1.5rem 1.6rem 1.6rem; }
+.pillars .tag{ color:var(--cyan); display:block; margin-bottom:.7rem; }
+.pillars p{ margin:0; font-size:.95rem; color:var(--muted); line-height:1.6; }
+.pillars p strong{ color:var(--ink); font-weight:400; }
+
+/* ── section scaffolding ─────────────────────── */
+.band{ border-top:1px solid var(--line); padding-block:clamp(3.75rem,9vh,6.5rem); }
+.sec-head{
+  display:grid; grid-template-columns:auto 1fr; align-items:baseline;
+  gap:1.25rem; margin-bottom:1.1rem;
+}
+.sec-head .tag{ color:var(--cyan); }
+.sec-head h2{
+  font-family:var(--serif); font-weight:400;
+  font-size:clamp(1.95rem,1.3rem + 2.4vw,3.1rem);
+  line-height:1.05; letter-spacing:-.015em; margin:0; text-wrap:balance;
+}
+@media (max-width:640px){ .sec-head{ grid-template-columns:1fr; gap:.6rem; } }
+.sec-lede{ margin:0 0 clamp(2rem,4.5vw,3rem); max-width:68ch; color:var(--muted); font-size:1.03rem; }
+
+/* consulting cards: 1px gap over a tinted container paints every divider */
+.cards{
+  display:grid; grid-template-columns:repeat(auto-fit, minmax(min(100%, 320px), 1fr));
+  gap:1px; border:1px solid var(--line); background:var(--line);
+}
+.card{
+  background:var(--card); position:relative;
+  padding:clamp(1.5rem,2.6vw,2.1rem) clamp(1.25rem,2.2vw,1.8rem);
+  display:flex; flex-direction:column; gap:.65rem;
+  transition:background .45s ease, box-shadow .45s ease;
+}
+.card::before{
+  content:""; position:absolute; left:0; top:0; height:3px; width:100%;
+  background:var(--grad); transform:scaleX(0); transform-origin:left;
+  transition:transform .55s cubic-bezier(.2,.9,.2,1);
+}
+.card:hover{ background:#FBFDFE; box-shadow:0 18px 40px -28px rgba(11,26,61,.35); }
+.card:hover::before{ transform:scaleX(1); }
+.card .num{ font-family:var(--mono); font-size:.6875rem; letter-spacing:.2em; color:var(--faint); transition:color .4s; }
+.card:hover .num{ color:var(--cyan); }
+.card h3{ font-family:var(--sans); font-weight:400; font-size:1.0625rem; margin:.3rem 0 0; letter-spacing:.005em; }
+.card p{ margin:0; font-size:.9375rem; line-height:1.6; color:var(--muted); }
+.card .get{
+  margin-top:auto; padding-top:.85rem; border-top:1px dashed var(--line);
+  font-size:.875rem; color:var(--ink); line-height:1.5;
+}
+.card .get span{
+  display:block; font-family:var(--mono); font-size:.625rem; letter-spacing:.18em;
+  text-transform:uppercase; color:var(--cyan); margin-bottom:.3rem;
+}
+
+.duo{
+  display:grid; gap:clamp(2rem,5vw,4rem);
+  margin-top:clamp(2.5rem,6vh,4rem);
+  grid-template-columns:repeat(auto-fit, minmax(min(100%, 380px), 1fr));
+}
+.duo h3{ margin:0 0 1.1rem; font-weight:500; }
+.signals ul{ list-style:none; margin:0; padding:0; }
+.signals li{
+  position:relative; padding:.72rem 0 .72rem 1.6rem;
+  border-bottom:1px solid var(--line-soft); font-size:.95rem; line-height:1.5;
+}
+.signals li:first-child{ border-top:1px solid var(--line-soft); }
+.signals li::before{
+  content:""; position:absolute; left:.1rem; top:1.22rem; width:7px; height:7px;
+  border:1.5px solid var(--cyan); transform:rotate(45deg);
+}
+.steps ol{ list-style:none; margin:0; padding:0; counter-reset:step; }
+.steps li{
+  counter-increment:step; position:relative;
+  display:grid; grid-template-columns:2.3rem 1fr; column-gap:.9rem;
+  padding-bottom:1.05rem;
+}
+.steps li::before{
+  content:counter(step, decimal-leading-zero);
+  grid-row:span 2;
+  width:2.3rem; height:2.3rem; display:grid; place-items:center;
+  font-family:var(--mono); font-size:.72rem; color:var(--navy);
+  border:1px solid var(--line); background:var(--card); border-radius:50%;
+  position:relative; z-index:1;
+}
+.steps li:not(:last-child)::after{
+  content:""; position:absolute; left:1.15rem; top:2.3rem; bottom:0; width:1px; background:var(--line);
+}
+.steps b{ font-weight:400; font-size:1rem; display:flex; justify-content:space-between; gap:1rem; align-items:baseline; }
+.steps b small{ font-family:var(--mono); font-size:.6875rem; letter-spacing:.08em; color:var(--cyan); font-weight:400; white-space:nowrap; }
+.steps p{ margin:.2rem 0 0; font-size:.9rem; color:var(--muted); line-height:1.5; }
+
+.sectors{
+  display:flex; flex-wrap:wrap; align-items:center; gap:.5rem;
+  margin-top:clamp(2rem,5vh,3rem); padding-top:1.4rem; border-top:1px solid var(--line);
+}
+.sectors .tag{ margin-right:.8rem; }
+.chip{
+  font-family:var(--mono); font-size:.6875rem; letter-spacing:.04em;
+  padding:.3rem .7rem; border:1px solid var(--line); border-radius:999px; color:var(--muted);
+  background:var(--card);
+}
+
+/* training programmes */
+.programs{
+  display:grid; gap:1px; border:1px solid var(--line); background:var(--line);
+  grid-template-columns:repeat(auto-fit, minmax(min(100%, 330px), 1fr));
+}
+.program{ background:var(--card); padding:clamp(1.4rem,2.4vw,2rem) clamp(1.25rem,2.2vw,1.8rem); display:flex; flex-direction:column; gap:.9rem; }
+.program header{ display:grid; gap:.55rem; }
+.program .kicker{ font-family:var(--mono); font-size:.625rem; letter-spacing:.18em; text-transform:uppercase; color:var(--faint); }
+.program h3{ font-family:var(--serif); font-weight:400; font-size:clamp(1.45rem,1.15rem + .9vw,1.85rem); line-height:1.08; letter-spacing:-.01em; margin:0; }
+.program .dur{
+  justify-self:start; font-family:var(--mono); font-size:.6875rem; letter-spacing:.06em; color:#fff;
+  padding:.28rem .65rem; background:var(--grad);
+  -webkit-print-color-adjust:exact; print-color-adjust:exact;
+}
+.program dl{ margin:0; display:grid; grid-template-columns:auto 1fr; gap:.25rem .9rem; font-size:.85rem; }
+.program dt{ font-family:var(--mono); font-size:.625rem; letter-spacing:.14em; text-transform:uppercase; color:var(--faint); padding-top:.2em; }
+.program dd{ margin:0; color:var(--ink); }
+.mods{ list-style:none; margin:0; padding:.9rem 0 0; border-top:1px dashed var(--line); display:grid; gap:.42rem; }
+.mods li{ position:relative; padding-left:1.05rem; font-size:.88rem; line-height:1.45; color:var(--muted); }
+.mods li::before{ content:""; position:absolute; left:0; top:.62em; width:.45rem; height:1px; background:var(--cyan); }
+.mods li b{ font-weight:400; color:var(--ink); }
+
+.learn{ margin-top:clamp(2rem,5vh,3rem); }
+.outcomes li::before{ border:0; background:var(--cyan); width:6px; height:6px; border-radius:50%; transform:none; top:1.3rem; }
+
+.format{
+  list-style:none; margin:clamp(1.75rem,4vh,2.5rem) 0 0; padding:0;
+  display:grid; grid-template-columns:repeat(auto-fit, minmax(min(100%, 190px), 1fr)); gap:1rem 1.5rem;
+}
+.format li{ display:grid; gap:.2rem; font-size:.9rem; line-height:1.45; color:var(--muted); }
+.format li b{ font-family:var(--mono); font-size:.625rem; letter-spacing:.18em; text-transform:uppercase; color:var(--cyan); font-weight:500; }
+
+.cta{
+  margin-top:clamp(2.5rem,6vh,4rem);
+  background:var(--ink); color:rgba(255,255,255,.78);
+  position:relative; overflow:hidden;
+  padding:clamp(1.75rem,4vw,2.75rem) clamp(1.5rem,4vw,2.75rem);
+  display:grid; gap:1.5rem 3rem; align-items:end;
+  grid-template-columns:repeat(auto-fit, minmax(min(100%, 340px), 1fr));
+  -webkit-print-color-adjust:exact; print-color-adjust:exact;
+}
+.cta::before{ content:""; position:absolute; left:0; top:0; height:3px; width:100%; background:var(--grad); }
+.cta::after{
+  content:""; position:absolute; right:-8%; top:-60%; width:60%; height:220%; pointer-events:none;
+  background:radial-gradient(closest-side, rgba(46,182,219,.22), transparent);
+}
+.cta > *{ position:relative; z-index:1; }
+.cta .tag{ color:var(--cyan-br); }
+.cta .cta-h{
+  font-family:var(--serif); font-size:clamp(1.7rem,1.2rem + 1.8vw,2.6rem); line-height:1.08;
+  letter-spacing:-.015em; color:#fff; margin:.6rem 0 .7rem;
+}
+.cta p{ margin:0; max-width:52ch; font-size:.95rem; line-height:1.6; }
+.cta-links{ display:grid; gap:.45rem; justify-items:start; }
+.cta .mail{
+  font-family:var(--serif); font-size:clamp(1.45rem,1rem + 1.6vw,2.2rem); color:#fff;
+  line-height:1.1; border-bottom:2px solid var(--cyan-br); padding-bottom:.15rem; margin-bottom:.4rem;
+  transition:color .3s;
+}
+.cta .mail:hover{ color:var(--cyan-br); }
+.cta-links span{ font-family:var(--mono); font-size:.72rem; letter-spacing:.08em; color:rgba(255,255,255,.62); }
+
+/* other programmes (screen only) */
+.more{ padding-block:clamp(3rem,7vh,4.5rem); border-top:1px solid var(--line); }
+.more-list{ list-style:none; margin:1.4rem 0 0; padding:0; display:grid; gap:1px; background:var(--line); border:1px solid var(--line); grid-template-columns:repeat(auto-fit, minmax(min(100%, 220px), 1fr)); }
+.more-list a{ display:grid; gap:.3rem; padding:1.2rem 1.3rem 1.3rem; background:var(--card); height:100%; transition:background .35s; }
+.more-list a:hover{ background:#FBFDFE; }
+.more-list b{ font-weight:400; display:flex; justify-content:space-between; gap:.5rem; }
+.more-list b::after{ content:"\2192"; color:var(--faint); transition:transform .3s var(--ease-out), color .3s; }
+.more-list a:hover b::after{ transform:translateX(4px); color:var(--cyan); }
+.more-list span{ font-size:.85rem; color:var(--muted); line-height:1.45; }
+
+/* ── footer ──────────────────────────────────── */
+footer{ position:relative; z-index:1; background:var(--ink); color:rgba(255,255,255,.72); padding-block:2.5rem 3rem; }
+.foot{ display:flex; flex-wrap:wrap; justify-content:space-between; align-items:center; gap:1rem; }
+footer .tag{ color:rgba(255,255,255,.5); text-transform:none; letter-spacing:.09em; }
+footer a.tag{ transition:color .3s; }
+footer a.tag:hover{ color:var(--cyan-br); }
+
+/* per-page head and foot only exist on paper */
+.sheet-head, .sheet-foot{ display:none; }
+
+/* ── entrance motion ─────────────────────────── */
+.rise{ opacity:0; transform:translateY(22px); }
+.cover .rise{ animation:rise .95s cubic-bezier(.2,.9,.2,1) forwards; }
+.cover .rise:nth-child(1){ animation-delay:.05s; }
+.cover .rise:nth-child(2){ animation-delay:.14s; }
+.cover .rise:nth-child(3){ animation-delay:.24s; }
+.cover .rise:nth-child(4){ animation-delay:.34s; }
+.cover .iso.rise{ animation-delay:.3s; }
+@keyframes rise{ to{ opacity:1; transform:none; } }
+@media (prefers-reduced-motion:reduce){
+  html{ scroll-behavior:auto; }
+  *,*::before,*::after{ animation-duration:.01ms !important; transition-duration:.01ms !important; }
+  .rise{ opacity:1; transform:none; }
+}
+:focus-visible{ outline:2px solid var(--cyan); outline-offset:3px; }
+
+/* ═════════════════════════════════════════════
+   PRINT — every .sheet is one A4 page
+   ═════════════════════════════════════════════ */
+@page{ size:A4; margin:0; }
+@media print{
+  *{ -webkit-print-color-adjust:exact; print-color-adjust:exact; }
+  html, body{ background:#fff; width:210mm; }
+  body{ font-size:9.2pt; line-height:1.5; }
+  body::before, header.site, footer, .more, .no-print{ display:none !important; }
+  .print-only{ display:revert; }
+  .rise{ opacity:1 !important; transform:none !important; animation:none !important; }
+  a{ text-decoration:none; }
+
+  .sheet{
+    width:210mm; height:297mm; overflow:hidden;
+    padding:11mm 14mm 8.5mm;
+    display:flex; flex-direction:column;
+    break-after:page; break-inside:avoid;
+    border:0 !important;
+    background:
+      radial-gradient(90% 40% at 92% -4%, rgba(46,182,219,.13), transparent 62%),
+      linear-gradient(to right, var(--grid) 1px, transparent 1px) 0 0/ 9.6mm 9.6mm,
+      linear-gradient(to bottom, var(--grid) 1px, transparent 1px) 0 0/ 9.6mm 9.6mm,
+      var(--paper);
+  }
+  .sheet.last{ break-after:auto; }
+  h1 em, .sec-head h2 em{ background:none; -webkit-text-fill-color:currentColor; color:var(--cyan); }
+  .sheet .wrap{ padding:0; max-width:none; }
+  .band, .cover{ padding:11mm 14mm 8.5mm; }
+
+  .sheet-head{
+    display:flex; align-items:center; justify-content:space-between;
+    padding-bottom:3.2mm; margin-bottom:6.5mm; border-bottom:.25mm solid var(--line);
+  }
+  .sheet-head img{ width:29mm; height:auto; }
+  .sheet-head .tag{ font-size:6.2pt; letter-spacing:.2em; }
+  .sheet-head .tag b{ color:var(--cyan); font-weight:500; }
+  .sheet-foot{
+    display:flex; justify-content:space-between; gap:4mm; margin-top:auto;
+    padding-top:2.6mm; border-top:.25mm solid var(--line-soft);
+    font-family:var(--mono); font-size:6.2pt; letter-spacing:.1em; color:var(--faint);
+  }
+  .sheet-foot b{ color:var(--ink); font-weight:500; }
+
+  .tag{ font-size:6.4pt; }
+
+  /* cover */
+  .cover-grid{ grid-template-columns:1fr; gap:6mm; }
+  .cover-copy{ gap:3.6mm; }
+  h1{ font-size:37pt; line-height:.98; max-width:none; }
+  .lede{ font-size:10.6pt; line-height:1.5; max-width:none; }
+  .iso{ height:var(--print-fig-h, 121mm); box-shadow:none; }
+  .iso::before{ top:2.2mm; left:2.2mm; } .iso::after{ bottom:2.2mm; right:2.2mm; }
+  .iso-top, .iso-cap{ font-size:6.3pt; padding:3.2mm 4mm 0; }
+  .iso-cap{ padding:0 4mm 3.2mm; align-items:flex-end; flex-direction:row; }
+  .iso-cap .readout{ white-space:nowrap; text-align:right; }
+  .iso svg{ height:0; min-height:0; }
+  .iso-cap .hint, .iso-credit{ display:none; }
+  .iso-cap .caption{ display:block; color:var(--fx-ink-hi); max-width:118mm; line-height:1.45; letter-spacing:.02em; }
+
+  .stats{ margin-top:6mm; grid-template-columns:repeat(4,1fr); }
+  .stats li{ padding:3mm 4mm 0 0; gap:1mm; }
+  .stats b{ font-size:24pt; }
+  .stats span{ font-size:8pt; line-height:1.4; }
+  .pillars{ margin-top:5.5mm; grid-template-columns:repeat(3,1fr); }
+  .pillars > div{ padding:4mm 4.4mm 4.4mm; }
+  .pillars .tag{ margin-bottom:1.6mm; }
+  .pillars p{ font-size:8.6pt; line-height:1.5; }
+
+  /* section heads */
+  .sec-head{ gap:4mm; margin-bottom:2.5mm; }
+  .sec-head h2{ font-size:25pt; }
+  .sec-lede{ font-size:9.8pt; line-height:1.52; margin-bottom:6mm; max-width:none; }
+
+  /* consulting */
+  .cards{ grid-template-columns:repeat(3,1fr); }
+  .card{ padding:4.4mm 4.2mm 4.6mm; gap:1.9mm; }
+  .card::before{ display:none; }
+  .card h3{ font-size:10.2pt; font-weight:500; margin:0; line-height:1.3; }
+  .card p{ font-size:8.4pt; line-height:1.48; }
+  .card .num{ font-size:6pt; }
+  .card .get{ font-size:8.1pt; line-height:1.42; padding-top:2.4mm; }
+  .card .get span{ font-size:5.6pt; margin-bottom:.6mm; }
+
+  .duo{ margin-top:7mm; gap:8mm; grid-template-columns:1fr 1fr; }
+  .duo h3{ margin-bottom:2.4mm; }
+  .signals li{ font-size:8.7pt; padding:2.05mm 0 2.05mm 4.8mm; line-height:1.4; }
+  .signals li::before{ top:3.25mm; width:1.6mm; height:1.6mm; border-width:.3mm; }
+  .steps li{ grid-template-columns:7mm 1fr; column-gap:3mm; padding-bottom:3mm; }
+  .steps li::before{ width:7mm; height:7mm; font-size:6.2pt; }
+  .steps li:not(:last-child)::after{ left:3.5mm; top:7mm; }
+  .steps b{ font-size:9.4pt; }
+  .steps b small{ font-size:6pt; }
+  .steps p{ font-size:8.3pt; line-height:1.42; margin-top:.5mm; }
+
+  .sectors{ margin-top:6mm; padding-top:3.6mm; gap:1.4mm; }
+  .sectors .tag{ margin-right:2mm; }
+  .chip{ font-size:6.4pt; padding:.7mm 2.2mm; }
+
+  /* training */
+  .programs{ grid-template-columns:repeat(var(--print-cols, 3), 1fr); }
+  .program{ padding:4.4mm 4.2mm 4.6mm; gap:2.6mm; }
+  .program header{ gap:1.4mm; }
+  .program .kicker{ font-size:5.8pt; }
+  .program h3{ font-size:16pt; }
+  .program .dur{ font-size:6.4pt; padding:.6mm 2mm; background:var(--navy); color:#fff; }
+  .program dl{ font-size:7.9pt; gap:.6mm 2.6mm; }
+  .program dt{ font-size:5.6pt; }
+  .mods{ padding-top:2.6mm; gap:1.45mm; }
+  .mods li{ font-size:8pt; line-height:1.38; padding-left:3mm; }
+  .mods li::before{ width:1.6mm; top:.68em; }
+  .learn{ margin-top:6mm; }
+  .outcomes li::before{ width:1.5mm; height:1.5mm; top:3.3mm; }
+  .format{ margin-top:5.5mm; grid-template-columns:repeat(5,1fr); gap:2mm 4mm; }
+  .format li{ font-size:7.9pt; line-height:1.38; gap:.6mm; }
+  .format li b{ font-size:5.8pt; }
+
+  .cta{ margin-top:6mm; padding:7mm 7.5mm; gap:4mm 8mm; grid-template-columns:1.2fr 1fr; }
+  .cta .cta-h{ font-size:21pt; margin:1.6mm 0 2mm; }
+  .cta p{ font-size:8.7pt; line-height:1.48; }
+  .cta .mail{ font-size:15pt; border-bottom-width:.5mm; }
+  .cta-links{ gap:1mm; }
+  .cta-links span{ font-size:6.6pt; }
+}
+</style>
+</head>
+
+<body>
+<div class="shell">
+
+<header class="site">
+  <div class="wrap bar">
+    <a class="brand" href="../../" aria-label="Scale Yazılım — home">
+      <img src="../../logo.svg" width="932" height="460" alt="Scale Yazılım">
+    </a>
+    <nav>
+      <a class="hide-sm" href="#consulting">Consulting</a>
+      <a class="hide-sm" href="#training">Training</a>
+      <a class="hide-sm" href="#contact">Contact</a>
+      <a class="pdf" href="scale-yazilim-redis.pdf" download>PDF &darr;</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <section class="sheet cover" id="top">
+    <div class="sheet-head">
+      <img src="../../logo.svg" width="932" height="460" alt="Scale Yazılım">
+      <span class="tag">Training &amp; Consulting &middot; <b>Redis &amp; Caching</b></span>
+    </div>
+    <div class="wrap cover-grid">
+      <div class="cover-copy">
+        <div class="eyebrow rise"><span class="tag">Training &amp; consulting · Caching</span><span class="rule" aria-hidden="true"></span></div>
+        <h1 class="rise">Caching that makes systems <em>faster</em>, not wrong.</h1>
+        <p class="lede rise"><strong>Consulting and training on Redis, Valkey and caching architecture.</strong> What to cache, for how long, and what happens when the cache is cold, full or down — we design cache layers that cut latency and database load without serving stale data.</p>
+        <div class="actions rise no-print">
+          <a class="btn" href="#contact"><span>Book a scoping call</span><span aria-hidden="true">&rarr;</span></a>
+          <a class="link-arrow" href="scale-yazilim-redis.pdf" download>Download the PDF <span aria-hidden="true">&darr;</span></a>
+        </div>
+      </div>
+      <div class="rise">
+        <figure class="iso" style="--print-fig-h:113mm">
+          <div class="iso-top"><span class="fig"><b>Fig. 01</b> &middot; Cache-aside</span><span class="state" id="fig-state"></span></div>
+          <svg id="stage" role="img" tabindex="0"></svg>
+          <figcaption class="iso-cap">
+            <span class="hint">Click — or press space — to expire every key at once</span>
+            <span class="caption">Cache-aside in front of a database. Hits light a key and return in well under a millisecond; misses travel on to the database and fill the key on the way back. Expire every key at once and the database takes the whole stampede.</span>
+            <span class="readout" id="readout" aria-live="polite"></span>
+          </figcaption>
+        </figure>
+        <a class="iso-credit no-print" href="https://iso-glow.vercel.app" target="_blank" rel="noopener">Made with ISO-GLOW &nearr;</a>
+      </div>
+    </div>
+    <div class="wrap">
+      <ul class="stats">
+        <li><b>&lt; 1 ms</b><span>Typical cache read — the latency we design for</span></li>
+        <li><b>3 days</b><span>From data structures to clusters and failover</span></li>
+        <li><b>≤ 15</b><span>People per class, with a lab environment each</span></li>
+        <li><b>EN · TR</b><span>Delivered in English or Turkish, remote or on-site</span></li>
+      </ul>
+      <div class="pillars">
+        <div><span class="tag">Consulting</span><p><strong>Cache the right things.</strong> Hot paths, keys, TTLs and invalidation designed together — and measured under real load.</p></div>
+        <div><span class="tag">Training</span><p><strong>Know the failure modes.</strong> Stampedes, stale reads, hot keys and failovers, rehearsed in labs before they happen in production.</p></div>
+        <div><span class="tag">Support</span><p><strong>Stay ahead of growth.</strong> Capacity reviews, upgrades and incident help, including the Redis ↔ Valkey decision.</p></div>
+      </div>
+    </div>
+    <div class="sheet-foot">
+      <span>Scale Yazılım Ltd. Şti. &middot; Ankara, Türkiye</span>
+      <span>scaleyazilim.com/services/redis &middot; <b>info@scaleyazilim.com</b> &middot; 1 / 3</span>
+    </div>
+  </section>
+
+  <section class="sheet band" id="consulting">
+    <div class="sheet-head">
+      <img src="../../logo.svg" width="932" height="460" alt="Scale Yazılım">
+      <span class="tag">Training &amp; Consulting &middot; <b>Redis &amp; Caching</b></span>
+    </div>
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="tag">02 &middot; Consulting</span>
+        <h2>Fast reads, <em>correct</em> data, a bill that makes sense.</h2>
+      </div>
+      <p class="sec-lede">A cache is a second copy of your data with its own rules for going stale. We map where it sits in your request paths, decide what each key is allowed to be wrong about and for how long, and make sure the system survives the cache being cold, full or gone.</p>
+      <div class="cards">
+        <article class="card">
+          <span class="num">01</span>
+          <h3>Cache architecture review</h3>
+          <p>Which reads to cache, key design, TTLs and invalidation paths across API, application and CDN layers.</p>
+          <p class="get"><span>You get</span>A cache map of your hot paths with hit-ratio targets.</p>
+        </article>
+        <article class="card">
+          <span class="num">02</span>
+          <h3>Latency &amp; performance</h3>
+          <p>Hot keys, big keys, slow commands, pipelining, connection pools and client-side caching.</p>
+          <p class="get"><span>You get</span>p99 fixes measured under load, before and after.</p>
+        </article>
+        <article class="card">
+          <span class="num">03</span>
+          <h3>Consistency &amp; invalidation</h3>
+          <p>Stale reads, write races, stampedes and thundering herds; event-driven invalidation from CDC or Kafka.</p>
+          <p class="get"><span>You get</span>An invalidation design with stampede protection built in.</p>
+        </article>
+        <article class="card">
+          <span class="num">04</span>
+          <h3>High availability &amp; scaling</h3>
+          <p>Replication, Sentinel, Redis Cluster and hash slots, persistence choices, failover drills.</p>
+          <p class="get"><span>You get</span>An HA topology and a rehearsed failover runbook.</p>
+        </article>
+        <article class="card">
+          <span class="num">05</span>
+          <h3>Memory &amp; cost</h3>
+          <p>Eviction policies, data-structure choice, compression, fragmentation and right-sizing.</p>
+          <p class="get"><span>You get</span>A memory-per-key model and a smaller bill.</p>
+        </article>
+        <article class="card">
+          <span class="num">06</span>
+          <h3>Beyond caching</h3>
+          <p>Sessions, rate limiting, Streams as queues, leaderboards, distributed locks — and when not to use Redis.</p>
+          <p class="get"><span>You get</span>Reviewed patterns with their failure modes covered.</p>
+        </article>
+      </div>
+      <div class="duo">
+        <div class="signals">
+          <h3 class="tag">Signals it is time to call</h3>
+          <ul>
+            <li>Database CPU spikes when many keys expire together</li>
+            <li>Users see old prices, stock or permissions</li>
+            <li>p99 latency jumps during traffic peaks</li>
+            <li>Memory is full and evictions keep climbing</li>
+            <li>A failover takes minutes — or loses writes</li>
+            <li>One key takes most of the traffic</li>
+          </ul>
+        </div>
+        <div class="steps">
+          <h3 class="tag">How an engagement runs</h3>
+          <ol>
+            <li><b>Scoping call <small>45 min · free</small></b><p>We hear the problem, agree goals and the numbers success is judged by.</p></li>
+            <li><b>Assessment <small>1 week</small></b><p>Read-only access, diagnostics, logs and short interviews. Findings in writing.</p></li>
+            <li><b>Fix &amp; tune <small>1–4 weeks</small></b><p>Changes made with your team in small steps, each measured before and after.</p></li>
+            <li><b>Hand-over <small>ongoing</small></b><p>Runbooks, a focused workshop for your engineers and optional retained support.</p></li>
+          </ol>
+        </div>
+      </div>
+      <div class="sectors">
+        <span class="tag">Field experience</span>
+        <span class="chip">Retail &amp; e-commerce</span>
+        <span class="chip">Banking &amp; finance</span>
+        <span class="chip">Media</span>
+        <span class="chip">Gaming</span>
+        <span class="chip">SaaS</span>
+        <span class="chip">Public sector</span>
+      </div>
+    </div>
+    <div class="sheet-foot">
+      <span>Scale Yazılım Ltd. Şti. &middot; Ankara, Türkiye</span>
+      <span>scaleyazilim.com/services/redis &middot; <b>info@scaleyazilim.com</b> &middot; 2 / 3</span>
+    </div>
+  </section>
+
+  <section class="sheet band last" id="training">
+    <div class="sheet-head">
+      <img src="../../logo.svg" width="932" height="460" alt="Scale Yazılım">
+      <span class="tag">Training &amp; Consulting &middot; <b>Redis &amp; Caching</b></span>
+    </div>
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="tag">03 &middot; Training</span>
+        <h2>From data structures to <em>failover</em> drills.</h2>
+      </div>
+      <p class="sec-lede">Three days that move from how Redis stores data, through the caching patterns that keep it correct, to running it highly available. Every pattern is tried in a lab — including the ways it breaks.</p>
+      <div class="programs" style="--print-cols:3">
+        <article class="program">
+          <header>
+            <span class="kicker">Day 1 · Foundations</span>
+            <h3>Redis Essentials</h3>
+            <span class="dur">6 hours</span>
+          </header>
+          <dl>
+            <dt>Level</dt><dd>Beginner – intermediate</dd>
+            <dt>Prereq.</dt><dd>Backend development experience</dd>
+          </dl>
+          <ul class="mods">
+            <li>Strings, hashes, lists, sets, sorted sets</li>
+            <li>Streams, bitmaps and HyperLogLog</li>
+            <li>Keys, expiry and key-naming conventions</li>
+            <li>Single-threaded model and pipelining</li>
+            <li>Persistence: RDB snapshots and AOF</li>
+            <li>Memory model and encodings</li>
+            <li>Redis, Valkey and managed services compared</li>
+          </ul>
+        </article>
+        <article class="program">
+          <header>
+            <span class="kicker">Day 2 · Patterns</span>
+            <h3>Caching Patterns</h3>
+            <span class="dur">6 hours</span>
+          </header>
+          <dl>
+            <dt>Level</dt><dd>Intermediate</dd>
+            <dt>Prereq.</dt><dd>Day 1 or equivalent</dd>
+          </dl>
+          <ul class="mods">
+            <li>Cache-aside, read-through, write-through, write-behind</li>
+            <li>TTL design, jitter and soft expiry</li>
+            <li>Invalidation: explicit, versioned keys, events</li>
+            <li>Stampedes: locks, early refresh, request coalescing</li>
+            <li>Eviction policies: LRU, LFU, volatile vs. all-keys</li>
+            <li>Client-side caching and tracking</li>
+            <li>HTTP and CDN caching layers</li>
+          </ul>
+        </article>
+        <article class="program">
+          <header>
+            <span class="kicker">Day 3 · Production</span>
+            <h3>Running Redis</h3>
+            <span class="dur">6 hours</span>
+          </header>
+          <dl>
+            <dt>Level</dt><dd>Intermediate – advanced</dd>
+            <dt>Prereq.</dt><dd>Days 1–2</dd>
+          </dl>
+          <ul class="mods">
+            <li>Replication and Sentinel failover</li>
+            <li>Redis Cluster: hash slots, resharding, hot spots</li>
+            <li>Monitoring: hit ratio, latency, evictions, fragmentation</li>
+            <li>ACLs, TLS and safe commands</li>
+            <li>Redis on Kubernetes: operators and storage</li>
+            <li>Benchmarking and capacity planning</li>
+            <li>Failover drill: break it, then recover it</li>
+          </ul>
+        </article>
+      </div>
+      <div class="duo learn">
+        <div class="signals">
+          <h3 class="tag">Who it is for</h3>
+          <ul>
+            <li>Backend developers adding or fixing a cache</li>
+            <li>Architects designing read-heavy systems</li>
+            <li>SRE and platform teams running Redis or Valkey</li>
+            <li>Tech leads chasing latency or database load</li>
+          </ul>
+        </div>
+        <div class="signals outcomes">
+          <h3 class="tag">What your team leaves with</h3>
+          <ul>
+            <li>The right caching pattern for each read path</li>
+            <li>TTLs and invalidation that never serve stale data for long</li>
+            <li>A database protected from stampedes and hot keys</li>
+            <li>Redis run highly available, with the right things monitored</li>
+          </ul>
+        </div>
+      </div>
+      <ul class="format">
+        <li><b>Delivery</b>Remote or on-site; daytime, evening or weekend sessions</li>
+        <li><b>Labs</b>A cloud lab for every participant, on realistic data</li>
+        <li><b>Class size</b>Up to 15 people, so everyone gets hands-on time</li>
+        <li><b>Language</b>English or Turkish, with all materials provided</li>
+        <li><b>Tailoring</b>Content, length and examples fitted to your stack</li>
+      </ul>
+      <div class="cta" id="contact">
+        <div>
+          <span class="tag">Next step</span>
+          <p class="cta-h">Start with a 45-minute scoping call.</p>
+          <p>Tell us what is slow, wrong or about to grow. We reply within one working day with a suggested next step — consulting, training or both.</p>
+        </div>
+        <div class="cta-links">
+          <a class="mail" href="mailto:info@scaleyazilim.com?subject=Redis%20%26amp%3B%20Caching%20%E2%80%94%20training%20%26%20consulting">info@scaleyazilim.com</a>
+          <span>scaleyazilim.com/services/redis</span>
+          <span>Ankara &middot; Türkiye &mdash; remote or on-site, worldwide</span>
+        </div>
+      </div>
+    </div>
+    <div class="sheet-foot">
+      <span>Scale Yazılım Ltd. Şti. &middot; Ankara, Türkiye</span>
+      <span>scaleyazilim.com/services/redis &middot; <b>info@scaleyazilim.com</b> &middot; 3 / 3</span>
+    </div>
+  </section>
+
+  <section class="more no-print" aria-labelledby="more-h">
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="tag">+</span>
+        <h2 id="more-h">More training &amp; consulting</h2>
+      </div>
+      <ul class="more-list">
+        <li><a href="../elasticsearch/"><b>Elasticsearch &amp; OpenSearch</b><span>Search clusters, relevance tuning and migrations</span></a></li>
+        <li><a href="../qdrant/"><b>Qdrant &amp; vector search</b><span>Semantic search, RAG and hybrid retrieval</span></a></li>
+        <li><a href="../big-data/"><b>Kafka, Spark &amp; big data</b><span>Streaming and batch pipelines at scale</span></a></li>
+        <li><a href="../kubernetes/"><b>Kubernetes</b><span>Clusters, security, GitOps and stateful workloads</span></a></li>
+      </ul>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap foot">
+    <span class="tag">&copy; <span id="year">2026</span> Scale Yazılım Ltd. Şti.</span>
+    <a class="tag" href="mailto:info@scaleyazilim.com">info@scaleyazilim.com</a>
+  </div>
+</footer>
+
+</div>
+
+<!-- glow filters, shared by the figure -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <defs>
+    <filter id="glow" filterUnits="userSpaceOnUse" x="-2000" y="-2000" width="6000" height="6000"><feGaussianBlur stdDeviation="4" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+    <filter id="soft" filterUnits="userSpaceOnUse" x="-2000" y="-2000" width="6000" height="6000"><feGaussianBlur stdDeviation="2.4" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+    <filter id="bloom" filterUnits="userSpaceOnUse" x="-2000" y="-2000" width="6000" height="6000"><feGaussianBlur stdDeviation="10"/></filter>
+  </defs>
+</svg>
+
+<script>
+document.getElementById('year').textContent = new Date().getFullYear();
+
+/* Isometric kernel after iso-figure by Tolga Cohce (MIT, github.com/MrBongoC/ai-iso-skill)
+   and iso-glow. +x runs down-right, +y down-left, +z up; paint back to front. */
+const ISO = (() => {
+  const C = Math.cos(Math.PI / 6), S = Math.sin(Math.PI / 6);
+  function kernel(OX, OY) {
+    const P = (x,y,z) => [(x-y)*C + OX, (x+y)*S - z + OY];
+    const D = (x,y,z) => [(x-y)*C, (x+y)*S - z];
+    const plane = (O,U,V) => { const o=P(...O), u=D(...U), v=D(...V);
+      return `matrix(${u[0]} ${u[1]} ${v[0]} ${v[1]} ${o[0]} ${o[1]})`; };
+    const TOP   = (x,y,z) => plane([x,y,z],[1,0,0],[0,1,0]);
+    const FRONT = (x,y,z) => plane([x,y,z],[1,0,0],[0,0,-1]);
+    const SIDE  = (x,y,z) => plane([x,y,z],[0,-1,0],[0,0,-1]);
+    const rect = (t,w,h,r=0,cls='face') => `<g transform="${t}"><rect class="${cls}" width="${w}" height="${h}" rx="${r}"/></g>`;
+    const d3 = pts => 'M' + pts.map(p => P(...p).map(v => v.toFixed(2)).join(' ')).join('L') + 'Z';
+    // rounded box: one rounded top plus one continuous wall, so corners meet cleanly
+    const rounded = (x,y,z,w,d,h,r,cls) => {
+      r = Math.min(r, w/2, d/2);
+      const n = 10, z1 = z + h, q = Math.PI/4, H = Math.PI/2, c = cls ? ' ' + cls : '';
+      const arc = (cx,cy,a0,a1) => { const o = []; for (let i = 0; i <= n; i++) { const a = a0 + (a1-a0)*i/n; o.push([cx + r*Math.cos(a), cy + r*Math.sin(a)]); } return o; };
+      const ring = [...arc(x+w-r,y+r,-H,0), ...arc(x+w-r,y+d-r,0,H), ...arc(x+r,y+d-r,H,2*H), ...arc(x+r,y+r,2*H,3*H)];
+      const vis  = [...arc(x+w-r,y+r,-q,0), ...arc(x+w-r,y+d-r,0,H), ...arc(x+r,y+d-r,H,3*q)];
+      const wall = [...vis.map(([a,b]) => [a,b,z]), ...vis.slice().reverse().map(([a,b]) => [a,b,z1])];
+      return `<path class="face${c}" d="${d3(wall)}"/><path class="face top${c}" d="${d3(ring.map(([a,b]) => [a,b,z1]))}"/>`;
+    };
+    const box = (x,y,z,w,d,h,r=0) => r > 0 ? rounded(x,y,z,w,d,h,r,'') :
+      rect(SIDE(x+w,y+d,z+h), d,h,0,'face side') + rect(FRONT(x,y+d,z+h), w,h,0,'face front') + rect(TOP(x,y,z+h), w,d,0,'face top');
+    // upright cylinder: visible half of the wall plus a full top disc
+    const cyl = (cx,cy,z,r,h,cls='') => {
+      const n = 36, c = cls ? ' ' + cls : '', ring = (a0,a1,zz) => { const o = []; for (let i = 0; i <= n; i++) { const a = a0 + (a1-a0)*i/n; o.push([cx + r*Math.cos(a), cy + r*Math.sin(a), zz]); } return o; };
+      const lo = ring(-Math.PI/4, 3*Math.PI/4, z), hi = ring(-Math.PI/4, 3*Math.PI/4, z+h).reverse();
+      return `<path class="face side${c}" d="${d3([...lo, ...hi])}"/><path class="face top${c}" d="${d3(ring(0, 2*Math.PI, z+h))}"/>`;
+    };
+    const arc3 = (cx,cy,z,r,a0=-Math.PI/4,a1=3*Math.PI/4) => { const o = []; for (let i = 0; i <= 24; i++) { const a = a0 + (a1-a0)*i/24; o.push([cx + r*Math.cos(a), cy + r*Math.sin(a), z]); } return 'M' + o.map(p => P(...p).map(v => v.toFixed(2)).join(' ')).join('L'); };
+    const path = pts => 'M' + pts.map(p => P(...p).map(n => n.toFixed(2)).join(' ')).join('L');
+    return { C, S, P, D, plane, TOP, FRONT, SIDE, rect, box, cyl, arc3, path };
+  }
+  function frame(points, margin = 0.08, aspect = 4 / 3) {
+    const d = points.map(([x,y,z]) => [(x-y)*C, (x+y)*S - z]);
+    let x0 = Math.min(...d.map(p => p[0])), x1 = Math.max(...d.map(p => p[0]));
+    let y0 = Math.min(...d.map(p => p[1])), y1 = Math.max(...d.map(p => p[1]));
+    const m = margin * Math.max(x1 - x0, y1 - y0);
+    let w = x1 - x0 + 2*m, h = y1 - y0 + 2*m, ox = m - x0, oy = m - y0;
+    if (w / h < aspect) { const nw = h * aspect; ox += (nw - w) / 2; w = nw; }
+    else { const nh = w / aspect; oy += (nh - h) / 2; h = nh; }
+    return { ...kernel(ox, oy), viewBox: `0 0 ${w.toFixed(1)} ${h.toFixed(1)}`, W: w, H: h };
+  }
+  const slits = (a0, a1, step, b0, b1, vertical = true, cls = 'detail') => {
+    let s = ''; for (let a = a0; a <= a1 + 1e-6; a += step)
+      s += vertical ? `<line class="${cls}" x1="${a}" y1="${b0}" x2="${a}" y2="${b1}"/>` : `<line class="${cls}" x1="${b0}" y1="${a}" x2="${b1}" y2="${a}"/>`;
+    return s;
+  };
+  // small seeded PRNG so a figure draws the same picture every time (and in the PDF)
+  const rng = seed => () => { seed |= 0; seed = seed + 0x6D2B79F5 | 0; let t = Math.imul(seed ^ seed >>> 15, 1 | seed); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; };
+  return { kernel, frame, slits, rng };
+})();
+
+const FIGS = [];
+
+/* Fig. 01 — cache-aside in front of a database.
+   Hits light a key and return fast; misses travel on to the database and
+   fill the key on the way back. Expire everything at once to see a stampede. */
+FIGS.push({
+  id: 'rd',
+  aria: 'Isometric cache-aside setup: an application server, an in-memory cache with sixteen keys and a database. Requests light the keys they hit; misses go on to the database. Click or press space to expire every key at once and watch the stampede reach the database.',
+  css: `
+    .iso .k{ fill:var(--fx-recess); stroke:var(--fx-detail); stroke-width:1; vector-effect:non-scaling-stroke; transition:fill .5s, stroke .5s; }
+    .iso .k.warm{ fill:rgba(46,182,219,.30); stroke:var(--fx-accent); }
+    .iso .k.hit{ fill:var(--fx-accent-hi); stroke:var(--fx-accent-hi); filter:url(#glow); transition:none; }
+    .iso .bar{ fill:var(--fx-accent); filter:url(#soft); transition:width .4s; }
+    .iso .track{ fill:var(--fx-recess); stroke:var(--fx-detail); vector-effect:non-scaling-stroke; }
+    .iso .db .face{ transition:fill .35s, stroke .35s; }
+    .iso .db.hot .face{ fill:var(--fx-accent-d); stroke:var(--fx-accent-hi); }
+    .iso .db.hot .face.top{ fill:var(--fx-accent-hi); }
+    .iso .db.hot{ filter:url(#soft); }
+    .iso .rib{ fill:none; stroke:var(--fx-line); stroke-width:1; vector-effect:non-scaling-stroke; }
+    .iso .db.hot .rib{ stroke:var(--fx-accent-hi); }
+    .iso .scr{ font-size:8.5px; }
+    .iso .tiny{ font-size:8px; letter-spacing:.06em; }
+  `,
+  mount(stage, api) {
+    const Z = 8;
+    const APP = { x: 24, y: 196, w: 92, d: 80, h: 48 };
+    const CA = { x: 150, y: 92, w: 150, d: 150, h: 30 };
+    const DB = { cx: 362, cy: 66, r: 44, h: 104 };
+    const K = api.iso.frame([[0,0,0],[420,0,0],[0,300,0],[420,300,0],[DB.cx - DB.r, DB.cy - DB.r, Z + DB.h + 6],[DB.cx + DB.r, DB.cy - DB.r, Z + DB.h]], 0.05, 1.42);
+    const { TOP, FRONT, SIDE, box, cyl, arc3, path } = K;
+    const appC = [APP.x + APP.w / 2, APP.y + APP.d / 2], caC = [CA.x + CA.w / 2, CA.y + CA.d / 2], dbC = [DB.cx, DB.cy];
+    const wire = (a, b) => path([[a[0], a[1], Z], [b[0], b[1], Z]]);
+
+    const N = 16;
+    let keys = Array(N).fill(true), hot = new Set(), dbHot = 0, log = [], last = 'GET user:42', banner = '';
+    const ratio = () => log.length ? log.filter(Boolean).length / log.length : .94;
+
+    let fx, dyn;
+    function bg() {
+      let s = `<g class="plate">` + box(0, 0, 0, 420, 300, Z, 18) + `</g>`;
+      s += `<g transform="${TOP(0, 0, Z)}"><rect class="detail" x="9" y="9" width="402" height="282" rx="12"/>`
+        + [[22,22],[398,22],[22,278],[398,278]].map(([a,b]) => `<circle class="detail" cx="${a}" cy="${b}" r="3"/>`).join('')
+        + `<text class="label" x="150" y="286" font-size="9" letter-spacing="1.5">CACHE-ASIDE · read path</text></g>`;
+      s += `<path class="wire hot" d="${wire(appC, caC)}"/><path class="wire" d="${wire(caC, dbC)}"/>`;
+      s += `<g id="rd-fx"></g><g id="rd-dyn"></g>`;
+      stage.setAttribute('viewBox', K.viewBox);
+      stage.innerHTML = s;
+      fx = stage.querySelector('#rd-fx'); dyn = stage.querySelector('#rd-dyn');
+    }
+
+    function render() {
+      let s = '';
+      // application server
+      { const { x, y, w, d, h } = APP;
+        s += box(x, y, Z, w, d, h, 5);
+        s += `<g transform="${FRONT(x, y + d, Z + h)}"><rect class="halo hot" x="2" y="3" width="${w - 4}" height="${h - 8}" filter="url(#bloom)"/>`
+          + `<rect class="glass hot" x="7" y="7" width="${w - 14}" height="${h - 20}" rx="2" filter="url(#soft)"/>`
+          + `<text class="scr" x="12" y="19">${last}</text><text class="scr" x="12" y="29" opacity=".7">${keys.every(k => !k) ? 'miss → db' : 'p50 0.4 ms'}</text>`
+          + `<text class="label tiny" x="8" y="${h - 4}">app</text></g>`;
+        s += `<g transform="${SIDE(x + w, y + d, Z + h)}">` + api.iso.slits(10, 60, 5, 9, 38) + `</g>`; }
+      // cache: sixteen keys on top, hit-ratio bar on the front
+      { const { x, y, w, d, h } = CA;
+        s += box(x, y, Z, w, d, h, 6);
+        s += `<g transform="${TOP(x, y, Z + h)}">`;
+        for (let i = 0; i < N; i++) {
+          const c = i % 4, r = (i / 4) | 0, cls = hot.has(i) ? 'k hit' : keys[i] ? 'k warm' : 'k';
+          s += `<rect class="${cls}" x="${8 + c * 35}" y="${8 + r * 35}" width="29" height="29" rx="3"/>`;
+        }
+        s += `</g>`;
+        const R = ratio();
+        s += `<g transform="${FRONT(x, y + d, Z + h)}"><text class="label tiny" x="10" y="12">in-memory cache</text>`
+          + `<rect class="track" x="10" y="17" width="${w - 20}" height="6" rx="2"/><rect class="bar" x="10" y="17" width="${((w - 20) * R).toFixed(1)}" height="6" rx="2"/>`
+          + `<text class="label tiny hi" x="${w - 10}" y="12" text-anchor="end">hit ${Math.round(R * 100)}%</text></g>`;
+        s += `<g transform="${SIDE(x + w, y + d, Z + h)}">` + api.iso.slits(10, 140, 6, 8, 22) + `</g>`; }
+      // database
+      { const { cx, cy, r, h } = DB;
+        s += `<g class="db${dbHot ? ' hot' : ''}">` + cyl(cx, cy, Z, r, h);
+        [.25, .5, .75].forEach(f => { s += `<path class="rib" d="${arc3(cx, cy, Z + h * f, r)}"/>`; });
+        s += `</g>`;
+        s += `<g transform="${TOP(cx - r, cy + r + 6, Z)}"><text class="label tiny" x="${r - 12}" y="14">database</text></g>`; }
+      dyn.innerHTML = s;
+      api.state(keys.filter(Boolean).length + '/16 keys warm');
+      api.readout(banner || `hit ratio ${Math.round(ratio() * 100)}% · hit 0.4 ms · miss 38 ms`);
+    }
+
+    const flashKey = i => { hot.add(i); render(); api.after(260, () => { hot.delete(i); render(); }); };
+    const flashDb = () => { dbHot++; render(); api.after(700, () => { dbHot--; render(); }); };
+    const note = h => { log.push(h); if (log.length > 60) log.shift(); };
+
+    function request(i) {
+      last = `GET user:${40 + i}`;
+      api.pulse(fx, wire(appC, caC), 420);
+      if (keys[i]) { note(true); api.after(380, () => flashKey(i)); return; }
+      note(false);
+      api.after(380, () => api.pulse(fx, wire(caC, dbC), 420));
+      api.after(780, () => { flashDb(); api.pulse(fx, wire(dbC, caC), 420); });
+      api.after(1200, () => { keys[i] = true; flashKey(i); });
+    }
+    const pick = () => Math.min(N - 1, Math.floor(N * Math.pow(Math.random(), 1.7)));
+
+    function stampede() {
+      keys = keys.map(() => false); banner = 'all keys expired at once · stampede → database'; render();
+      api.after(2600, () => { banner = ''; render(); });
+      for (let n = 0; n < 10; n++) api.after(n * 90, () => request(n % N));
+    }
+
+    bg(); log = Array.from({ length: 50 }, (_, n) => n % 17 !== 0); render();
+    stage.addEventListener('click', () => stampede());
+    return {
+      key(e) { if (e.key !== ' ' && e.key !== 'Enter') return false; stampede(); return true; },
+      demo() {
+        api.every(420, () => request(pick()));
+        api.every(1600, () => { const w = keys.map((k, i) => k ? i : -1).filter(i => i >= 0); if (w.length) { keys[w[Math.floor(Math.random() * w.length)]] = false; render(); } });
+        api.every(16000, stampede);
+      },
+      reset() { banner = ''; keys = Array(N).fill(true); hot.clear(); dbHot = 0; last = 'GET user:42'; log = Array.from({ length: 50 }, (_, n) => n % 17 !== 0); render(); },
+    };
+  },
+});
+
+(function boot() {
+  const stage = document.getElementById('stage');
+  if (!stage || !FIGS.length) return;
+  const still = new URLSearchParams(location.search).has('pdf') || matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const out = document.getElementById('readout'), chip = document.getElementById('fig-state');
+  const timers = new Set(), demo = new Set();
+  const api = {
+    iso: ISO, still,
+    readout: s => { out.textContent = s; },
+    state: s => { chip.textContent = s; },
+    after: (ms, fn, bag = timers) => { const t = setTimeout(() => { bag.delete(t); fn(); }, ms); bag.add(t); return t; },
+    every: (ms, fn) => { const t = setInterval(fn, ms); demo.add(t); return t; },
+    later: (ms, fn) => api.after(ms, fn, demo),
+    stopDemo: () => { demo.forEach(t => { clearTimeout(t); clearInterval(t); }); demo.clear(); },
+    stopAll: () => { api.stopDemo(); timers.forEach(t => clearTimeout(t)); timers.clear(); },
+    // a dash of light travelling along a path; removes itself when done
+    pulse: (layer, d, ms = 700) => {
+      if (still) return;
+      const p = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+      p.setAttribute('d', d); p.setAttribute('pathLength', '1000'); p.setAttribute('class', 'pulse');
+      p.style.setProperty('--dur', ms + 'ms');
+      layer.appendChild(p); p.getBoundingClientRect(); p.classList.add('go');
+      p.addEventListener('animationend', () => p.remove(), { once: true });
+    },
+  };
+  const fig = FIGS[0];
+  stage.setAttribute('aria-label', fig.aria);
+  if (fig.css) { const st = document.createElement('style'); st.textContent = fig.css; document.head.appendChild(st); }
+  const ctl = fig.mount(stage, api) || {};
+  stage.addEventListener('keydown', e => { if (ctl.key && ctl.key(e)) e.preventDefault(); });
+  if (!still && ctl.demo && 'IntersectionObserver' in window) {
+    let on = false;
+    new IntersectionObserver(es => es.forEach(e => {
+      if (e.isIntersecting && !on) { on = true; ctl.demo(); }
+      else if (!e.isIntersecting && on) { on = false; api.stopDemo(); }
+    }), { threshold: .25 }).observe(stage);
+  }
+  addEventListener('beforeprint', () => { api.stopAll(); ctl.reset && ctl.reset(); });
+})();
+</script>
+</body>
+</html>

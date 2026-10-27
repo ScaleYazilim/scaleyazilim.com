@@ -9,6 +9,9 @@ Each page is a single self-contained HTML file.
 index.html                 home page (HTML + CSS + JS in one file)
 modernization/index.html   Reforge — agentic legacy modernization platform page,
                            linked from Services; product screens are CSS mock-ups
+services/<topic>/          training & consulting pages (elasticsearch, qdrant, redis,
+                           big-data, kubernetes), linked from "Training & consulting";
+                           each holds index.html and a 3-page A4 PDF of itself
 logo.svg       full lockup — mark + wordmark, used in the header
 favicon.svg    the mark on its own, used as the browser icon
 CNAME          custom domain: scaleyazilim.com
@@ -19,8 +22,17 @@ sitemap.xml    sitemap
 
 The palette is taken straight from the logo — deep navy `#0B1A3D` / `#004A7E`
 through to cyan `#0098B3` / `#2EB6DB` — and lives in the `:root` block at the
-top of each page. Changing those custom properties re-themes the page; keep the
-two files' `:root` blocks in sync.
+top of each page. Changing those custom properties re-themes the page; keep every
+page's `:root` block in sync.
+
+### Training & consulting pages
+
+Every `.sheet` section in a services page prints as exactly one A4 page (`@page` +
+the print block at the end of the page's `<style>`), so printing the page — or opening
+it with `?pdf`, which freezes the isometric figure — gives the shareable brochure.
+After editing a page, regenerate its PDF from Chrome's print dialog (A4, margins
+none, background graphics on) and save it next to the page as
+`scale-yazilim-<topic>.pdf`; keep each sheet inside its page.
 
 ## Development
 
