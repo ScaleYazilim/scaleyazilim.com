@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Hakkımızda — Scale Yazılım</title>
+<meta name="description" content="Scale Yazılım Sanayi Ticaret Ltd. Şti. — Ankara İvedik OSB’de kurulu yazılım geliştirme şirketi. Web ve mobil uygulamalar, kurumsal yazılım, kendi uygulamalarımız, eğitim ve danışmanlık.">
+<meta name="theme-color" content="#F6F8FA">
+<link rel="canonical" href="https://scaleyazilim.com/tr/hakkimizda/">
+
+<meta property="og:type" content="website">
+<meta property="og:locale" content="tr_TR">
+<meta property="og:site_name" content="Scale Yazılım">
+<meta property="og:title" content="Hakkımızda — Scale Yazılım">
+<meta property="og:description" content="Scale Yazılım Sanayi Ticaret Ltd. Şti. — Ankara İvedik OSB’de kurulu yazılım geliştirme şirketi. Web ve mobil uygulamalar, kurumsal yazılım, kendi uygulamalarımız, eğitim ve danışmanlık.">
+<meta property="og:url" content="https://scaleyazilim.com/tr/hakkimizda/">
+<meta property="og:image" content="https://scaleyazilim.com/logo.svg">
+<meta name="twitter:card" content="summary">
+
+<link rel="icon" href="../../favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="../../favicon.svg">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+
+<style>
+/* ─────────────────────────────────────────────
+   Scale Yazılım — Hakkımızda
+   Single file, self-contained; palette matches index.html
+   ───────────────────────────────────────────── */
+:root{
+  --ink:       #0B1A3D;
+  --ink-2:     #173F6E;
+  --navy:      #004A7E;
+  --steel:     #2383AD;
+  --cyan:      #0098B3;
+  --cyan-br:   #2EB6DB;
+
+  --paper:     #F5F8FA;
+  --card:      #FFFFFF;
+  --muted:     #55677E;
+  --faint:     #8595A8;
+  --line:      rgba(11,26,61,.13);
+  --line-soft: rgba(11,26,61,.07);
+  --grid:      rgba(11,26,61,.035);
+
+  --grad: linear-gradient(100deg, var(--navy), var(--cyan-br));
+  --ease-out: cubic-bezier(.23,1,.32,1);
+
+  --serif: "Instrument Serif", "Times New Roman", serif;
+  --sans:  "IBM Plex Sans", -apple-system, "Segoe UI", sans-serif;
+  --mono:  "IBM Plex Mono", ui-monospace, "SF Mono", monospace;
+
+  --gut: clamp(1.25rem, 5vw, 5.5rem);
+  --max: 1240px;
+}
+
+*,*::before,*::after{ box-sizing:border-box; }
+html{ -webkit-text-size-adjust:100%; scroll-behavior:smooth; }
+body{
+  margin:0; background:var(--paper); color:var(--ink);
+  font-family:var(--sans); font-weight:300;
+  font-size:clamp(1rem,.96rem + .2vw,1.0625rem); line-height:1.65; letter-spacing:.005em;
+  overflow-x:hidden; -webkit-font-smoothing:antialiased;
+}
+body::before{
+  content:""; position:fixed; inset:0; z-index:0; pointer-events:none;
+  background:
+    radial-gradient(110% 70% at 88% -8%, rgba(46,182,219,.20), transparent 60%),
+    radial-gradient(80% 55% at -5% 8%, rgba(0,74,126,.09), transparent 62%),
+    linear-gradient(to right, var(--grid) 1px, transparent 1px) 0 0/ 92px 92px,
+    linear-gradient(to bottom, var(--grid) 1px, transparent 1px) 0 0/ 92px 92px;
+  mask-image:linear-gradient(to bottom, #000 0%, #000 40%, transparent 80%);
+}
+.shell{ position:relative; z-index:1; }
+::selection{ background:var(--cyan); color:#fff; }
+a{ color:inherit; text-decoration:none; }
+img,svg{ display:block; max-width:100%; }
+.wrap{ width:100%; max-width:var(--max); margin-inline:auto; padding-inline:var(--gut); }
+
+.tag{
+  font-family:var(--mono); font-size:.6875rem; font-weight:500;
+  letter-spacing:.22em; text-transform:uppercase; color:var(--faint);
+}
+
+/* ── header ──────────────────────────────────── */
+header.site{
+  position:sticky; top:0; z-index:50;
+  backdrop-filter:saturate(160%) blur(16px);
+  background:rgba(245,248,250,.93);
+  border-bottom:1px solid var(--line-soft);
+}
+.bar{ display:flex; align-items:center; justify-content:space-between; gap:1.5rem; min-height:84px; }
+.brand{ display:block; line-height:0; }
+.brand img{ width:clamp(126px, 14vw, 158px); height:auto; transition:opacity .3s; }
+.brand:hover img{ opacity:.75; }
+.site nav{ display:flex; align-items:center; gap:clamp(1rem,2.4vw,2.25rem); }
+.site nav a{
+  font-family:var(--mono); font-size:.75rem; letter-spacing:.1em;
+  text-transform:uppercase; color:var(--muted);
+  padding-block:.35rem; position:relative; transition:color .3s;
+}
+.site nav a::after{
+  content:""; position:absolute; left:0; bottom:0; height:2px; width:100%;
+  background:var(--grad); transform:scaleX(0); transform-origin:right;
+  transition:transform .4s cubic-bezier(.2,.9,.2,1);
+}
+.site nav a:hover, .site nav a[aria-current="page"]{ color:var(--ink); }
+.site nav a:hover::after, .site nav a[aria-current="page"]::after{ transform:scaleX(1); transform-origin:left; }
+.site nav .mail{ color:var(--ink); }
+@media (max-width:640px){ .site nav .hide-sm{ display:none; } }
+
+/* ── hero ────────────────────────────────────── */
+.hero{ padding-block:clamp(2.75rem,8vh,5rem) clamp(2.5rem,6vh,4rem); }
+.hero .wrap{ display:grid; gap:clamp(1.5rem,3vw,2.25rem); }
+.doc-tabs{ display:flex; flex-wrap:wrap; gap:.5rem; }
+.doc-tabs a{
+  font-family:var(--mono); font-size:.75rem; letter-spacing:.03em;
+  padding:.45rem .9rem; border:1px solid var(--line); border-radius:999px;
+  color:var(--muted); background:rgba(255,255,255,.65);
+  transition:color .25s, border-color .25s, background-color .25s, transform .16s var(--ease-out);
+}
+.doc-tabs a:hover{ color:var(--ink); border-color:rgba(11,26,61,.28); }
+.doc-tabs a:active{ transform:scale(.97); }
+.doc-tabs a[aria-current="page"]{ background:var(--ink); border-color:var(--ink); color:#fff; }
+
+h1{
+  font-family:var(--serif); font-weight:400;
+  font-size:clamp(2.6rem, 6.6vw, 5.4rem); line-height:.98; letter-spacing:-.022em;
+  margin:0; max-width:19ch; text-wrap:balance;
+}
+h1 em, .statement em{
+  font-style:italic; padding-inline:.04em;
+  background:var(--grad); -webkit-background-clip:text; background-clip:text;
+  -webkit-text-fill-color:transparent; color:var(--cyan);
+}
+.lede{ max-width:60ch; margin:0; font-size:clamp(1.05rem,.98rem + .4vw,1.24rem); line-height:1.62; color:var(--muted); }
+.lede strong{ color:var(--ink); font-weight:400; }
+.doc-meta{
+  display:flex; flex-wrap:wrap; align-items:center; gap:.7rem 2.25rem;
+  padding-top:1.25rem; border-top:1px solid var(--line);
+}
+.doc-meta .tag b{ color:var(--ink); font-weight:500; letter-spacing:.08em; }
+.btn-print{
+  margin-left:auto; display:inline-flex; align-items:center; gap:.55rem;
+  font:500 .75rem/1 var(--mono); letter-spacing:.06em; color:var(--navy);
+  background:none; border:1px solid var(--line); border-radius:999px; padding:.55rem .95rem; cursor:pointer;
+  transition:border-color .25s, color .25s, transform .16s var(--ease-out);
+}
+.btn-print:hover{ border-color:var(--cyan); color:var(--ink); }
+.btn-print:active{ transform:scale(.97); }
+@media (max-width:640px){ .btn-print{ margin-left:0; } }
+
+.rise{ opacity:0; transform:translateY(16px); animation:rise .8s var(--ease-out) forwards; }
+.rise:nth-child(2){ animation-delay:.06s; } .rise:nth-child(3){ animation-delay:.12s; } .rise:nth-child(4){ animation-delay:.18s; }
+@keyframes rise{ to{ opacity:1; transform:none; } }
+
+/* ── document ────────────────────────────────── */
+.doc{ display:grid; gap:2.5rem; padding-block:clamp(2.5rem,6vh,4rem) clamp(4rem,10vh,7rem); border-top:1px solid var(--line); }
+@media (min-width:1000px){ .doc{ grid-template-columns:250px minmax(0,1fr); gap:clamp(3rem,6vw,5.5rem); } }
+
+.toc .tag{ display:block; margin-bottom:.9rem; color:var(--cyan); }
+.toc ol{ list-style:none; margin:0; padding:0; border-left:1px solid var(--line); }
+.toc a{
+  display:grid; grid-template-columns:2rem 1fr; align-items:baseline;
+  padding:.38rem 0 .38rem 1rem; margin-left:-1px; border-left:2px solid transparent;
+  font-size:.875rem; line-height:1.4; color:var(--muted);
+  transition:color .25s, border-color .25s;
+}
+.toc a .n{ font-family:var(--mono); font-size:.6875rem; color:var(--faint); transition:color .25s; }
+.toc a:hover{ color:var(--ink); }
+.toc a.on{ color:var(--ink); border-left-color:var(--cyan); }
+.toc a.on .n{ color:var(--cyan); }
+@media (min-width:1000px){ .toc{ position:sticky; top:112px; align-self:start; max-height:calc(100vh - 140px); overflow:auto; } }
+@media (max-width:999px){
+  .toc{ background:var(--card); border:1px solid var(--line); padding:1.25rem 1.25rem .75rem; }
+  .toc ol{ border-left:0; columns:2 220px; column-gap:1.5rem; }
+  .toc a{ padding-left:0; border-left:0; break-inside:avoid; }
+}
+
+.prose{ max-width:74ch; min-width:0; }
+.prose > section{ scroll-margin-top:108px; padding-bottom:2.5rem; }
+.prose > section + section{ border-top:1px solid var(--line-soft); padding-top:2.5rem; }
+.prose h2{
+  font-family:var(--serif); font-weight:400;
+  font-size:clamp(1.55rem,1.2rem + 1.1vw,2.05rem); line-height:1.12; letter-spacing:-.01em;
+  margin:0 0 1rem; display:flex; align-items:baseline; gap:.9rem;
+}
+.prose h2 .n{ font-family:var(--mono); font-size:.75rem; letter-spacing:.14em; color:var(--cyan); flex:none; }
+.prose h3{ font-family:var(--sans); font-weight:500; font-size:1rem; letter-spacing:.005em; margin:1.6rem 0 .45rem; }
+.prose p, .prose li{ color:#3A4B61; }
+.prose p{ margin:0 0 .95rem; }
+.prose ul, .prose ol{ margin:0 0 1rem; padding-left:1.25rem; }
+.prose li{ margin:.32rem 0; padding-left:.2rem; }
+.prose li::marker{ color:var(--cyan); }
+.prose ol.clauses{ list-style:none; padding-left:0; counter-reset:c; }
+.prose ol.clauses > li{ display:grid; grid-template-columns:2.6rem 1fr; padding-left:0; margin:.6rem 0; }
+.prose ol.clauses > li::before{ content:var(--c); font-family:var(--mono); font-size:.75rem; color:var(--faint); padding-top:.28em; }
+.prose strong{ font-weight:500; color:var(--ink); }
+.prose a{ color:var(--navy); text-decoration:underline; text-decoration-color:rgba(0,74,126,.28); text-underline-offset:3px; transition:text-decoration-color .25s; }
+.prose a:hover{ text-decoration-color:var(--cyan); }
+
+.party{ margin:1rem 0 1.25rem; border:1px solid var(--line); background:var(--card); }
+.party > div{ display:grid; grid-template-columns:minmax(8rem,12rem) 1fr; gap:.25rem 1.25rem; padding:.7rem 1.1rem; }
+.party > div + div{ border-top:1px solid var(--line-soft); }
+.party dt{ font-family:var(--mono); font-size:.6875rem; letter-spacing:.12em; text-transform:uppercase; color:var(--faint); padding-top:.3em; }
+.party dd{ margin:0; color:var(--ink); }
+@media (max-width:560px){ .party > div{ grid-template-columns:1fr; } }
+
+.tbl-wrap{ overflow-x:auto; margin:1rem 0 1.25rem; border:1px solid var(--line); background:var(--card); }
+.tbl{ width:100%; border-collapse:collapse; font-size:.9375rem; }
+.tbl th{ text-align:left; font:500 .6875rem/1.4 var(--mono); letter-spacing:.12em; text-transform:uppercase; color:var(--faint); padding:.75rem 1rem; border-bottom:1px solid var(--line); white-space:nowrap; }
+.tbl td{ padding:.75rem 1rem; vertical-align:top; color:#3A4B61; border-bottom:1px solid var(--line-soft); }
+.tbl tr:last-child td{ border-bottom:0; }
+.tbl td:first-child{ color:var(--ink); font-weight:400; min-width:10rem; }
+@media (max-width:560px){
+  .tbl thead{ display:none; }
+  .tbl tr{ display:block; padding:.8rem 1rem; border-bottom:1px solid var(--line-soft); }
+  .tbl tr:last-child{ border-bottom:0; }
+  .tbl td{ display:block; padding:0; border:0; }
+  .tbl td:first-child{ min-width:0; font-weight:500; margin-bottom:.2rem; }
+}
+
+.note{ margin:1.1rem 0; padding:1rem 1.2rem; background:var(--card); border:1px solid var(--line); border-left:3px solid var(--cyan); font-size:.9375rem; }
+.note p:last-child{ margin-bottom:0; }
+
+.keys{ display:grid; grid-template-columns:repeat(auto-fit, minmax(min(100%,220px),1fr)); gap:1px; background:var(--line); border:1px solid var(--line); margin:0 0 1rem; }
+.keys div{ background:var(--card); padding:1.1rem 1.2rem; }
+.keys b{ display:block; font-family:var(--serif); font-weight:400; font-size:1.65rem; line-height:1.1; color:var(--ink); margin-bottom:.35rem; }
+.keys span{ font-size:.875rem; color:var(--muted); line-height:1.5; display:block; }
+
+.form-tpl{ position:relative; margin:1rem 0; background:var(--ink); color:rgba(255,255,255,.86); padding:1.2rem 1.25rem; font:400 .8125rem/1.75 var(--mono); white-space:pre-wrap; }
+.form-tpl button{
+  position:absolute; top:.7rem; right:.7rem; cursor:pointer;
+  font:500 .6875rem/1 var(--mono); letter-spacing:.08em; text-transform:uppercase;
+  color:#fff; background:rgba(255,255,255,.08); border:1px solid rgba(255,255,255,.2); border-radius:999px; padding:.45rem .75rem;
+  transition:background-color .2s, transform .16s var(--ease-out);
+}
+.form-tpl button:hover{ background:rgba(255,255,255,.16); }
+.form-tpl button:active{ transform:scale(.97); }
+
+.band-light{ display:flex; flex-wrap:wrap; align-items:center; gap:1rem 1.5rem; margin:1.1rem 0 1.25rem; padding:1rem 1.2rem; background:var(--card); border:1px solid var(--line); }
+.band-light img{ width:min(100%,360px); height:auto; }
+.band-light span{ font-size:.875rem; color:var(--muted); }
+
+.todo{ display:inline-block; font:500 .8em/1.5 var(--mono); color:#7A5200; background:#FFF4D6; border:1px dashed #E0A800; border-radius:4px; padding:0 .4em; }
+
+/* ── about page ──────────────────────────────── */
+.band{ border-top:1px solid var(--line); padding-block:clamp(3.5rem,8vh,6rem); }
+.sec-head{ display:grid; grid-template-columns:auto 1fr; align-items:baseline; gap:1.25rem; margin-bottom:clamp(2rem,4.5vw,3rem); }
+.sec-head .tag{ color:var(--cyan); }
+.sec-head h2{ font-family:var(--serif); font-weight:400; font-size:clamp(1.85rem,1.3rem + 2.4vw,3.1rem); line-height:1.05; letter-spacing:-.015em; margin:0; }
+@media (max-width:640px){ .sec-head{ grid-template-columns:1fr; gap:.5rem; } }
+.sec-intro{ margin:calc(-1 * clamp(.75rem,2vw,1.5rem)) 0 clamp(1.75rem,4vw,2.5rem); max-width:64ch; color:var(--muted); }
+
+.grid{ display:grid; grid-template-columns:repeat(auto-fit, minmax(min(100%, 290px), 1fr)); gap:1px; border:1px solid var(--line); background:var(--line); }
+.cell{ padding:clamp(1.6rem,3vw,2.3rem) clamp(1.25rem,2.4vw,2rem); background:var(--card); position:relative; transition:background-color .45s, box-shadow .45s; }
+.cell::before{ content:""; position:absolute; left:0; top:0; height:3px; width:100%; background:var(--grad); transform:scaleX(0); transform-origin:left; transition:transform .55s cubic-bezier(.2,.9,.2,1); }
+.cell:hover{ background:#FBFDFE; box-shadow:0 18px 40px -28px rgba(11,26,61,.35); }
+.cell:hover::before{ transform:scaleX(1); }
+.cell .num{ font-family:var(--mono); font-size:.6875rem; letter-spacing:.2em; text-transform:uppercase; color:var(--faint); display:flex; justify-content:space-between; gap:1rem; margin-bottom:1.4rem; transition:color .4s; }
+.cell:hover .num{ color:var(--cyan); }
+a.cell .num::after{ content:"\2192"; letter-spacing:0; transition:transform .4s cubic-bezier(.2,.9,.2,1); }
+a.cell:hover .num::after{ transform:translateX(4px); }
+.cell h3{ font-family:var(--sans); font-weight:400; font-size:1.0625rem; margin:0 0 .6rem; }
+.cell p{ margin:0; font-size:.9375rem; line-height:1.62; color:var(--muted); }
+.cell ul{ margin:.9rem 0 0; padding-left:1.1rem; font-size:.9rem; color:var(--muted); }
+.cell li::marker{ color:var(--cyan); }
+
+.split{ display:grid; gap:clamp(2rem,5vw,4.5rem); }
+@media (min-width:900px){ .split{ grid-template-columns:1.05fr .95fr; } }
+.statement{ font-family:var(--serif); font-weight:400; font-size:clamp(1.5rem,1.1rem + 1.7vw,2.35rem); line-height:1.24; letter-spacing:-.012em; margin:0 0 1.5rem; text-wrap:pretty; }
+.split p.body{ color:var(--muted); max-width:56ch; margin:0 0 1.1rem; }
+
+.facts{ list-style:none; margin:0; padding:0; align-self:start; }
+.facts li{ display:grid; grid-template-columns:minmax(7.5rem,auto) 1fr; gap:1rem; padding:1rem 0; border-bottom:1px solid var(--line-soft); }
+.facts li:first-child{ border-top:1px solid var(--line-soft); }
+.facts .k{ font-family:var(--mono); font-size:.6875rem; letter-spacing:.16em; text-transform:uppercase; color:var(--faint); padding-top:.28em; }
+.facts .v{ font-size:.9688rem; color:var(--ink); }
+.facts .v a{ color:var(--navy); }
+.facts .v small{ display:block; color:var(--muted); font-size:.875rem; }
+
+.apps{ list-style:none; margin:0; padding:0; border:1px solid var(--line); background:var(--card); }
+.apps li{ display:grid; grid-template-columns:minmax(0,1.1fr) minmax(0,1.6fr) auto; gap:.4rem 1.5rem; align-items:baseline; padding:1.05rem 1.25rem; }
+.apps li + li{ border-top:1px solid var(--line-soft); }
+.apps .name{ color:var(--ink); font-weight:400; }
+.apps .what{ color:var(--muted); font-size:.9375rem; }
+.apps .where{ font-family:var(--mono); font-size:.75rem; letter-spacing:.04em; color:var(--navy); }
+@media (max-width:720px){ .apps li{ grid-template-columns:1fr; } }
+
+.pay{ display:grid; gap:1.5rem; margin-top:1.5rem; }
+@media (min-width:900px){ .pay{ grid-template-columns:1fr 1fr; } }
+.pay-points{ list-style:none; margin:0; padding:0; }
+.pay-points li{ display:grid; grid-template-columns:7.5rem 1fr; gap:1rem; padding:.85rem 0; border-bottom:1px solid var(--line-soft); font-size:.9375rem; color:var(--muted); }
+.pay-points li:first-child{ border-top:1px solid var(--line-soft); }
+.pay-points b{ font:500 .6875rem/1.9 var(--mono); letter-spacing:.14em; text-transform:uppercase; color:var(--faint); }
+.pay-card{ background:var(--card); border:1px solid var(--line); padding:1.4rem 1.5rem; display:grid; gap:1rem; align-content:start; }
+.pay-card img{ width:min(100%,380px); height:auto; }
+.pay-card p{ margin:0; font-size:.9375rem; color:var(--muted); }
+
+.cta-row{ display:flex; flex-wrap:wrap; align-items:center; gap:1rem 2rem; }
+.mail-xl{
+  display:inline-block; font-family:var(--serif); font-weight:400;
+  font-size:clamp(1.7rem,1rem + 4vw,3.8rem); line-height:1.06; letter-spacing:-.02em;
+  position:relative; word-break:break-word; color:var(--ink); transition:color .4s;
+}
+.mail-xl::after{ content:""; position:absolute; left:0; bottom:.02em; height:2px; width:100%; background:var(--grad); transform-origin:right; transition:transform .5s cubic-bezier(.2,.9,.2,1); }
+.mail-xl:hover{ color:var(--navy); }
+.mail-xl:hover::after{ transform:scaleX(0); }
+
+.reveal{ opacity:0; transform:translateY(18px); }
+.reveal.in{ animation:rise .8s var(--ease-out) forwards; }
+
+/* ── footer ──────────────────────────────────── */
+footer{ position:relative; z-index:1; background:var(--ink); color:rgba(255,255,255,.72); padding-block:2.5rem 3rem; }
+.foot{ display:flex; flex-wrap:wrap; justify-content:space-between; align-items:center; gap:1rem; }
+footer .tag{ color:rgba(255,255,255,.5); text-transform:none; letter-spacing:.09em; }
+footer a.tag{ transition:color .3s; }
+footer a.tag:hover{ color:var(--cyan-br); }
+/* legal links + iyzico logo band (required on every page by the payment provider) */
+.foot-legal{ display:flex; flex-wrap:wrap; justify-content:space-between; align-items:center; gap:1.25rem 2.5rem; padding-bottom:1.6rem; margin-bottom:1.6rem; border-bottom:1px solid rgba(255,255,255,.1); }
+footer nav.legal{ display:flex; flex-wrap:wrap; gap:.55rem 1.6rem; }
+footer nav.legal a{ font-family:var(--mono); font-size:.6875rem; letter-spacing:.1em; text-transform:uppercase; color:rgba(255,255,255,.72); padding-block:.2rem; transition:color .3s; }
+footer nav.legal a::after{ display:none; }
+footer nav.legal a:hover, footer nav.legal a[aria-current="page"]{ color:#fff; }
+.pay-band{ width:min(100%, 322px); height:auto; }
+
+@media (prefers-reduced-motion:reduce){
+  html{ scroll-behavior:auto; }
+  *,*::before,*::after{ animation-duration:.01ms !important; transition-duration:.01ms !important; }
+  .rise, .reveal{ opacity:1; transform:none; }
+}
+:focus-visible{ outline:2px solid var(--cyan); outline-offset:3px; }
+
+@media print{
+  @page{ size:A4; margin:16mm 15mm 18mm; }
+  html{ scroll-behavior:auto; }
+  body{ background:#fff; font-size:10pt; line-height:1.5; }
+  body::before, header.site, .doc-tabs, .btn-print, .toc, .form-tpl button, .foot-legal{ display:none !important; }
+  .rise, .reveal{ opacity:1 !important; transform:none !important; animation:none !important; }
+  .wrap{ max-width:none; padding-inline:0; }
+  .hero{ padding:0 0 6mm; }
+  h1{ font-size:28pt; max-width:none; }
+  h1 em, .statement em{ background:none; -webkit-text-fill-color:currentColor; color:var(--navy); }
+  .doc{ display:block; padding:6mm 0 0; }
+  .prose{ max-width:none; }
+  .prose > section{ padding-bottom:5mm; }
+  .prose > section + section{ padding-top:5mm; }
+  .prose h2{ font-size:16pt; break-after:avoid; }
+  .party, .tbl-wrap, .note, .keys, .form-tpl{ break-inside:avoid; }
+  .form-tpl{ background:#fff; color:var(--ink); border:1px solid var(--line); }
+  .band{ padding-block:8mm; }
+  .cell:hover, .cell::before{ box-shadow:none; transform:none; }
+  footer{ background:none; color:var(--ink); padding:5mm 0 0; border-top:1px solid var(--line); }
+  footer .tag{ color:var(--muted); }
+  a{ text-decoration:none !important; }
+}
+</style>
+</head>
+
+<body>
+<div class="shell">
+
+<header class="site">
+  <div class="wrap bar">
+    <a class="brand" href="../../" aria-label="Scale Yazılım — ana sayfa">
+      <img src="../../logo.svg" width="932" height="460" alt="Scale Yazılım">
+    </a>
+    <nav>
+      <a class="hide-sm" href="../../#services">Hizmetler</a>
+      <a class="hide-sm" href="../../#training">Eğitim</a>
+      <a class="hide-sm" href="../hakkimizda/" aria-current="page">Hakkımızda</a>
+      <a class="mail" href="mailto:info@scaleyazilim.com">İletişim</a>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+
+  <section class="hero">
+    <div class="wrap">
+      <div class="doc-tabs rise" role="navigation" aria-label="Kurumsal ve yasal sayfalar">
+        <a href="../hakkimizda/" aria-current="page">Hakkımızda</a>
+        <a href="../gizlilik-sozlesmesi/">Gizlilik Sözleşmesi</a>
+        <a href="../teslimat-ve-iade/">Teslimat ve İade Şartları</a>
+        <a href="../mesafeli-satis-sozlesmesi/">Mesafeli Satış Sözleşmesi</a>
+      </div>
+      <h1 class="rise">Doğru yapılan, <em>arkasında durulan</em> yazılım.</h1>
+      <p class="lede rise"><strong>Scale Yazılım Sanayi Ticaret Ltd. Şti.</strong>, Ankara İvedik OSB’de kurulu bir yazılım geliştirme şirketidir. Kurumlar için web ve mobil uygulamalar, kurumsal yazılımlar ve veri sistemleri geliştiriyor; kendi uygulamalarımızı işletiyor; arama, veri ve altyapı teknolojilerinde eğitim ve danışmanlık veriyoruz.</p>
+    </div>
+  </section>
+
+  <section class="band" id="ne-yapiyoruz">
+    <div class="wrap">
+      <div class="sec-head reveal"><span class="tag">01</span><h2>Ne yapıyoruz</h2></div>
+      <div class="grid reveal">
+        <a class="cell" href="../../#services">
+          <span class="num">Yazılım geliştirme</span>
+          <h3>Projeler ve sürekli destek</h3>
+          <p>Web ve mobil uygulamalar, kurumsal yazılımlar, API entegrasyonları, büyük veri ve arama sistemleri — fikirden canlıya ve sonrasındaki bakıma kadar.</p>
+        </a>
+        <a class="cell" href="#uygulamalar">
+          <span class="num">Ürünlerimiz</span>
+          <h3>Kendi uygulamalarımız</h3>
+          <p>Abonelikle ya da tek seferlik satın almayla sunduğumuz web ve mobil uygulamalar ve kurumlar için Reforge modernizasyon platformu.</p>
+        </a>
+        <a class="cell" href="../../#training">
+          <span class="num">Eğitim ve danışmanlık</span>
+          <h3>Ekipler için uygulamalı programlar</h3>
+          <p>Elasticsearch, Qdrant, Redis, Kafka ve Spark, Kubernetes üzerine kurumsal eğitim programları ve danışmanlık.</p>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <section class="band" id="uygulamalar">
+    <div class="wrap">
+      <div class="sec-head reveal"><span class="tag">02</span><h2>Uygulamalarımız ve ödeme</h2></div>
+      <p class="sec-intro reveal">Aşağıdaki uygulamaların tamamı Scale Yazılım’a aittir ve ortak bir ödeme altyapısı kullanır. Hangi uygulamadan satın alırsanız alın satıcı Scale Yazılım’dır; aynı <a href="../mesafeli-satis-sozlesmesi/">Mesafeli Satış Sözleşmesi</a>, <a href="../teslimat-ve-iade/">Teslimat ve İade Şartları</a> ve <a href="../gizlilik-sozlesmesi/">Gizlilik Sözleşmesi</a> geçerlidir.</p>
+      <ul class="apps reveal">
+        <li><span class="name">Popy</span><span class="what">Mobil geliştiriciler için araç uygulamaları — uygulama ücretleri</span><a class="where" href="https://popy.app/">popy.app</a></li>
+        <li><span class="name">Sizekolay</span><span class="what">Yapay zekâ ajanlarıyla e-ticaret ve pazaryeri yönetimi — hizmet ücreti</span><a class="where" href="https://sizekolay.com/">sizekolay.com</a></li>
+        <li><span class="name">StartupDeal</span><span class="what">Kurumları girişimlerle buluşturan platform — üyelik ücreti</span><a class="where" href="https://startupdeal.co/">startupdeal.co</a></li>
+        <li><span class="name">Eğitim ve danışmanlık</span><span class="what">Kurumsal eğitim programları ve danışmanlık oturumları</span><a class="where" href="../../#training">scaleyazilim.com</a></li>
+      </ul>
+      <div class="pay reveal">
+        <ul class="pay-points">
+          <li><b>Satıcı</b><span>Scale Yazılım Sanayi Ticaret Ltd. Şti. — tüm uygulamalarda.</span></li>
+          <li><b>Ödeme</b><span>Kredi kartı veya banka kartıyla, iyzico altyapısı üzerinden. Kart bilgileriniz bizde saklanmaz.</span></li>
+          <li><b>Teslimat</b><span>Dijital; ödeme onayından sonra hesabınızda anında kullanıma açılır.</span></li>
+          <li><b>Fatura</b><span>Her satın alma için e-Arşiv fatura, e-posta adresinize.</span></li>
+          <li><b>Destek</b><span><a href="mailto:info@scaleyazilim.com">info@scaleyazilim.com</a></span></li>
+        </ul>
+        <div class="pay-card">
+          <img src="../../assets/iyzico/logo-band-colored.svg" width="429" height="32" alt="iyzico ile Öde · Mastercard · Visa · American Express · Troy">
+          <p>Ödemeler, Türkiye Cumhuriyet Merkez Bankası lisanslı İyzi Ödeme ve Elektronik Para Hizmetleri A.Ş. (iyzico) güvencesiyle alınır. Visa, Mastercard, American Express ve Troy logolu kartlarla ödeme yapabilirsiniz.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="band" id="nasil-calisiyoruz">
+    <div class="wrap split">
+      <div class="reveal">
+        <div class="sec-head"><span class="tag">03</span><h2>Nasıl çalışıyoruz</h2></div>
+        <p class="statement">Küçük ve odaklı bir ekibiz. Çok iş yapmaktansa işi <em>doğru</em> yapmayı tercih ederiz.</p>
+        <p class="body">Projeleri uçtan uca üstleniyoruz: ihtiyacı anlıyor, sade bir çözüm tasarlıyor, çalışır hâle getiriyor ve zaman içinde geliştirmeye devam ediyoruz. Ortaya çıkan yazılım okunabilir, bakımı kolay ve gereksiz karmaşıklıktan arınmış olur.</p>
+        <p class="body">Ne yaptığımızı sade bir dille anlatır, kapsam ve takvimi en baştan birlikte netleştiririz. Kendi uygulamalarımızda da aynı yaklaşımı izliyoruz: açık fiyatlandırma, kolay iptal ve hızlı destek.</p>
+      </div>
+      <div class="reveal" id="sirket-bilgileri">
+        <div class="sec-head"><span class="tag">04</span><h2>Şirket bilgileri</h2></div>
+        <ul class="facts">
+          <li><span class="k">Unvan</span><span class="v">Scale Yazılım Sanayi Ticaret Limited Şirketi</span></li>
+          <li><span class="k">Adres</span><span class="v">İvedik OSB Mah. 2224 Cad. No: 1 İç Kapı No: 116, Yenimahalle / Ankara</span></li>
+          <li><span class="k">Vergi</span><span class="v">İvedik Vergi Dairesi · 757 110 0749</span></li>
+          <li><span class="k">MERSİS</span><span class="v">0757 1100 7490 0001</span></li>
+          <li><span class="k">E-posta</span><span class="v"><a href="mailto:info@scaleyazilim.com">info@scaleyazilim.com</a></span></li>
+          <li><span class="k">Telefon</span><span class="v">+90 553 829 54 55</span></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="band" id="yasal">
+    <div class="wrap">
+      <div class="sec-head reveal"><span class="tag">05</span><h2>Yasal metinler</h2></div>
+      <div class="grid reveal">
+        <a class="cell" href="../gizlilik-sozlesmesi/">
+          <span class="num">KVKK</span>
+          <h3>Gizlilik Sözleşmesi</h3>
+          <p>Hangi kişisel verileri neden işlediğimiz, kimlerle paylaştığımız, ne kadar sakladığımız ve haklarınız.</p>
+        </a>
+        <a class="cell" href="../teslimat-ve-iade/">
+          <span class="num">Teslimat · İade</span>
+          <h3>Teslimat ve İade Şartları</h3>
+          <p>Dijital teslimat, 14 günlük cayma hakkı, abonelik iptali ve iadelerin kartınıza nasıl yapıldığı.</p>
+        </a>
+        <a class="cell" href="../mesafeli-satis-sozlesmesi/">
+          <span class="num">Sözleşme</span>
+          <h3>Mesafeli Satış Sözleşmesi</h3>
+          <p>Uygulamalarımızdan yaptığınız satın almalarda tarafların hak ve yükümlülükleri.</p>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <section class="band" id="iletisim">
+    <div class="wrap">
+      <div class="sec-head reveal"><span class="tag">06</span><h2>İletişim</h2></div>
+      <div class="reveal">
+        <p class="lede" style="margin-bottom:1.25rem">Sipariş, fatura, iade veya iş birliği — bize yazın, en kısa sürede dönelim.</p>
+        <div class="cta-row"><a class="mail-xl" href="mailto:info@scaleyazilim.com">info@scaleyazilim.com</a></div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap foot-legal">
+    <nav class="legal" aria-label="Yasal metinler">
+      <a href="../../tr/hakkimizda/" aria-current="page">Hakkımızda</a>
+      <a href="../../tr/gizlilik-sozlesmesi/">Gizlilik Sözleşmesi</a>
+      <a href="../../tr/teslimat-ve-iade/">Teslimat ve İade Şartları</a>
+      <a href="../../tr/mesafeli-satis-sozlesmesi/">Mesafeli Satış Sözleşmesi</a>
+    </nav>
+    <img class="pay-band" src="../../assets/iyzico/logo-band-white.svg" width="429" height="32" alt="iyzico ile Öde · Mastercard · Visa · American Express · Troy">
+  </div>
+  <div class="wrap foot">
+    <span class="tag">&copy; <span id="year">2026</span> Scale Yazılım Sanayi Ticaret Ltd. Şti.</span>
+    <span class="tag">İvedik OSB, Yenimahalle / Ankara</span>
+    <a class="tag" href="mailto:info@scaleyazilim.com">info@scaleyazilim.com</a>
+  </div>
+</footer>
+
+</div>
+
+<script>
+  document.getElementById('year').textContent = new Date().getFullYear();
+
+  const items = document.querySelectorAll('.reveal');
+  if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches && 'IntersectionObserver' in window) {
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach((e, i) => {
+        if (!e.isIntersecting) return;
+        e.target.style.animationDelay = (i * 80) + 'ms';
+        e.target.classList.add('in');
+        io.unobserve(e.target);
+      });
+    }, { rootMargin: '0px 0px -10% 0px', threshold: 0.06 });
+    items.forEach(el => io.observe(el));
+  } else {
+    items.forEach(el => el.classList.add('in'));
+  }
+  window.addEventListener('beforeprint', () => items.forEach(el => el.classList.add('in')));
+</script>
+</body>
+</html>
