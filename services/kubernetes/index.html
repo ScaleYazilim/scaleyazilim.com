@@ -500,6 +500,13 @@ footer{ position:relative; z-index:1; background:var(--ink); color:rgba(255,255,
 footer .tag{ color:rgba(255,255,255,.5); text-transform:none; letter-spacing:.09em; }
 footer a.tag{ transition:color .3s; }
 footer a.tag:hover{ color:var(--cyan-br); }
+/* legal links + iyzico logo band (required on every page by the payment provider) */
+.foot-legal{ display:flex; flex-wrap:wrap; justify-content:space-between; align-items:center; gap:1.25rem 2.5rem; padding-bottom:1.6rem; margin-bottom:1.6rem; border-bottom:1px solid rgba(255,255,255,.1); }
+footer nav.legal{ display:flex; flex-wrap:wrap; gap:.55rem 1.6rem; }
+footer nav.legal a{ font-family:var(--mono); font-size:.6875rem; letter-spacing:.1em; text-transform:uppercase; color:rgba(255,255,255,.72); padding-block:.2rem; transition:color .3s; }
+footer nav.legal a::after{ display:none; }
+footer nav.legal a:hover, footer nav.legal a[aria-current="page"]{ color:#fff; }
+.pay-band{ width:min(100%, 322px); height:auto; }
 
 /* per-page head and foot only exist on paper */
 .sheet-head, .sheet-foot{ display:none; }
@@ -910,8 +917,18 @@ footer a.tag:hover{ color:var(--cyan-br); }
 </main>
 
 <footer>
+  <div class="wrap foot-legal">
+    <nav class="legal" lang="tr" aria-label="Yasal metinler">
+      <a href="../../hakkimizda/">Hakkımızda</a>
+      <a href="../../gizlilik-sozlesmesi/">Gizlilik Sözleşmesi</a>
+      <a href="../../teslimat-ve-iade/">Teslimat ve İade Şartları</a>
+      <a href="../../mesafeli-satis-sozlesmesi/">Mesafeli Satış Sözleşmesi</a>
+    </nav>
+    <img class="pay-band" src="../../assets/iyzico/logo-band-white.svg" width="429" height="32" alt="iyzico ile Öde · Mastercard · Visa · American Express · Troy">
+  </div>
   <div class="wrap foot">
-    <span class="tag">&copy; <span id="year">2026</span> Scale Yazılım Ltd. Şti.</span>
+    <span class="tag">&copy; <span id="year">2026</span> Scale Yazılım Sanayi Ticaret Ltd. Şti.</span>
+    <span class="tag">İvedik OSB, Yenimahalle / Ankara</span>
     <a class="tag" href="mailto:info@scaleyazilim.com">info@scaleyazilim.com</a>
   </div>
 </footer>

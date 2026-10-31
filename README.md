@@ -12,6 +12,12 @@ modernization/index.html   Reforge — agentic legacy modernization platform pag
 services/<topic>/          training & consulting pages (elasticsearch, qdrant, redis,
                            big-data, kubernetes), linked from "Training & consulting";
                            each holds index.html and a 3-page A4 PDF of itself
+hakkimizda/                About page (Turkish) — company details and the apps that share
+                           one payment setup
+gizlilik-sozlesmesi/       Privacy policy + KVKK notice (Turkish)
+teslimat-ve-iade/          Delivery & returns terms (Turkish)
+mesafeli-satis-sozlesmesi/ Distance sales agreement (Turkish)
+assets/iyzico/             official iyzico logo bands (iyzico ile Öde + card schemes)
 logo.svg       full lockup — mark + wordmark, used in the header
 favicon.svg    the mark on its own, used as the browser icon
 CNAME          custom domain: scaleyazilim.com
@@ -33,6 +39,16 @@ it with `?pdf`, which freezes the isometric figure — gives the shareable broch
 After editing a page, regenerate its PDF from Chrome's print dialog (A4, margins
 none, background graphics on) and save it next to the page as
 `scale-yazilim-<topic>.pdf`; keep each sheet inside its page.
+
+### Legal pages and payments
+
+Payments for all of our apps go through one iyzico merchant account, so the four
+Turkish pages above cover every app listed under "Uygulamalarımız" on `hakkimizda/`.
+Add a row there when a new app starts taking payments. Every page's footer carries
+the legal links and the white iyzico logo band (`assets/iyzico/logo-band-white.svg`);
+keep both on any new page — iyzico checks for them. Use the colored band on light
+backgrounds. Company details (unvan, address, VKN) appear in each legal page, so a
+change there means updating all four.
 
 ## Development
 
